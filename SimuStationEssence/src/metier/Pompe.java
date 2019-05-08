@@ -19,6 +19,15 @@ public class Pompe {
 	private double heureDebutService;
 
 	/**
+	 * Pompe par défaut
+	 */
+	public Pompe() {
+		this.client = null;
+		this.tempsService = 0;
+		this.heureDebutService = 0;
+	}
+
+	/**
 	 * Création d'une pompe à essence
 	 * @param client  le client qui utilise la pompe
 	 * @param tempsService temps que prend le client pour se servir à la pompe
@@ -39,16 +48,7 @@ public class Pompe {
 		return this.client == null;
 	}
 	
-	/**
-	 * Réinitialisation des caractéristique de la pompe à essence
-	 * en vu d'une nouvelle utilisation
-	 */
-	public void reinitialisation() {
-		this.client = null;
-		this.tempsService = 0;
-		this.heureDebutService = 0;
-	}
-
+	
 	/**
 	 * @return the client
 	 */
