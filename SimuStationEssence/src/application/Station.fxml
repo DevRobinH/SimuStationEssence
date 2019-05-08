@@ -7,11 +7,11 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane minHeight="600.0" minWidth="1200.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="application.StationController">
+<BorderPane minHeight="600.0" minWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.StationController">
    <top>
       <Pane prefHeight="600.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
          <children>
@@ -149,6 +149,62 @@
             <Label layoutX="128.0" layoutY="546.0" style="-fx-background-color: #F4F4F4;" text="Le système est Ergodique" textFill="#09557c">
                <font>
                   <Font size="17.0" />
+               </font>
+            </Label>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="38.0" layoutX="569.0" layoutY="123.0" stroke="#08354b" strokeMiterLimit="1.0" strokeType="INSIDE" width="88.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="38.0" layoutX="705.0" layoutY="123.0" stroke="#08354b" strokeMiterLimit="1.0" strokeType="INSIDE" width="88.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="38.0" layoutX="842.0" layoutY="123.0" stroke="#08354b" strokeMiterLimit="1.0" strokeType="INSIDE" width="88.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="38.0" layoutX="979.0" layoutY="123.0" stroke="#08354b" strokeMiterLimit="1.0" strokeType="INSIDE" width="88.0" />
+            <Label layoutX="1096.0" layoutY="78.0" style="-fx-background-color: #F4F4F4;" text="M/M/" textFill="RED">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="1136.0" layoutY="78.0" style="-fx-background-color: #F4F4F4;" text="1" textFill="RED">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="715.0" layoutY="134.0" text="File d'attente" />
+            <Line endX="45.0" layoutX="524.0" layoutY="142.0" startX="-4.4444580078125" />
+            <Line endX="-52.66668701171875" layoutX="757.0" layoutY="143.0" startX="-100.0" />
+            <Line endX="-52.66668701171875" layoutX="894.0" layoutY="143.0" startX="-100.0" />
+            <Line endX="-52.66668701171875" layoutX="1031.0" layoutY="143.0" startX="-100.0" />
+            <Line endX="45.0" endY="17.0" layoutX="524.0" layoutY="125.0" startX="37.33331298828125" startY="9.666671752929688" />
+            <Line endX="45.0" endY="17.0" layoutX="934.0" layoutY="126.0" startX="37.33331298828125" startY="9.666671752929688" />
+            <Line endX="45.0" endY="17.0" layoutX="797.0" layoutY="126.0" startX="37.33331298828125" startY="9.666671752929688" />
+            <Line endX="45.0" endY="17.0" layoutX="660.0" layoutY="126.0" startX="37.33331298828125" startY="9.666671752929688" />
+            <Line endX="29.77777099609375" endY="16.888885498046875" layoutX="532.0" layoutY="132.0" startX="37.33331298828125" startY="9.666671752929688" />
+            <Line endX="29.77777099609375" endY="16.888885498046875" layoutX="668.0" layoutY="133.0" startX="37.33331298828125" startY="9.666671752929688" />
+            <Line endX="29.77777099609375" endY="16.888885498046875" layoutX="805.0" layoutY="133.0" startX="37.33331298828125" startY="9.666671752929688" />
+            <Line endX="29.77777099609375" endY="16.888885498046875" layoutX="942.0" layoutY="133.0" startX="37.33331298828125" startY="9.666671752929688" />
+            <Label layoutX="513.0" layoutY="123.0" text="Clients">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <Label layoutX="596.0" layoutY="127.0" text="Entrée" />
+            <Label layoutX="600.0" layoutY="142.0" text="λ = " textFill="RED" />
+            <Label layoutX="620.0" layoutY="142.0" text="3" textFill="RED" />
+            <Label layoutX="867.0" layoutY="127.0" prefHeight="20.0" prefWidth="43.0" text="Station" />
+            <Label layoutX="873.0" layoutY="141.0" text="μ = " textFill="RED" />
+            <Label layoutX="893.0" layoutY="141.0" text="3" textFill="RED" />
+            <Label layoutX="1007.0" layoutY="133.0" text="Sortie" />
+            <Label layoutX="861.0" layoutY="104.0" text="1 pompe" textFill="RED" />
+            <Line endX="193.77783203125" layoutX="888.0" layoutY="174.0" startX="-200.88885498046875" />
+            <Line endX="29.77777099609375" endY="16.888885498046875" layoutX="657.0" layoutY="157.0" startX="29.77777099609375" startY="7.111114501953125" />
+            <Line endX="29.77777099609375" endY="16.888885498046875" layoutX="1052.0" layoutY="157.0" startX="29.77777099609375" startY="7.111114501953125" />
+            <Line endX="193.77783203125" layoutX="900.0" layoutY="199.0" startX="-345.77777099609375" />
+            <Line endX="29.77777099609375" endY="16.888885498046875" layoutX="524.0" layoutY="182.0" startX="29.77777099609375" startY="7.111114501953125" />
+            <Line endX="29.77777099609375" endY="16.888885498046875" layoutX="1064.0" layoutY="182.0" startX="29.77777099609375" startY="7.111114501953125" />
+            <Label layoutX="842.0" layoutY="174.0" text="Système d'attente">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <Label layoutX="764.0" layoutY="201.0" text="Phénomène d'attente">
+               <font>
+                  <Font size="11.0" />
                </font>
             </Label>
          </children>
