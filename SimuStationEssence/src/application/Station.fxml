@@ -7,44 +7,40 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane minHeight="600.0" minWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.StationController">
    <top>
-      <Pane prefHeight="600.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="630.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
          <children>
-            <Rectangle arcHeight="25.0" arcWidth="25.0" disable="true" fill="#ffffff00" height="229.0" layoutX="15.0" layoutY="65.0" stroke="#a6d5ff" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeMiterLimit="1.0" strokeType="INSIDE" width="435.0" />
+            <Rectangle arcHeight="25.0" arcWidth="25.0" disable="true" fill="#ffffff00" height="236.0" layoutX="15.0" layoutY="65.0" stroke="#a6d5ff" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeMiterLimit="1.0" strokeType="INSIDE" width="435.0" />
             <Label layoutX="45.0" layoutY="55.0" style="-fx-background-color: #F4F4F4;" text=" Paramètres " textFill="#09557c">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Rectangle arcHeight="25.0" arcWidth="25.0" disable="true" fill="#ffffff00" height="274.0" layoutX="17.0" layoutY="310.0" stroke="#a6d5ff" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeMiterLimit="1.0" strokeType="INSIDE" width="435.0" />
-            <Label layoutX="47.0" layoutY="300.0" style="-fx-background-color: #F4F4F4;" text=" Moyennes " textFill="#09557c">
+            <Rectangle arcHeight="25.0" arcWidth="25.0" disable="true" fill="#ffffff00" height="285.0" layoutX="17.0" layoutY="320.0" stroke="#a6d5ff" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeMiterLimit="1.0" strokeType="INSIDE" width="435.0" />
+            <Label layoutX="47.0" layoutY="309.0" style="-fx-background-color: #F4F4F4;" text=" Moyennes " textFill="#09557c">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Rectangle arcHeight="25.0" arcWidth="25.0" disable="true" fill="#ffffff00" height="519.0" layoutX="470.0" layoutY="65.0" stroke="#a6d5ff" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeMiterLimit="1.0" strokeType="INSIDE" width="716.0" />
-            <Label layoutX="500.0" layoutY="55.0" style="-fx-background-color: #F4F4F4;" text=" Simulation " textFill="#09557c">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Rectangle arcHeight="25.0" arcWidth="25.0" disable="true" fill="#ffffff00" height="36.0" layoutX="342.0" layoutY="6.0" stroke="#28cbf8" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeMiterLimit="1.0" strokeType="INSIDE" width="434.0" />
-            <Label layoutX="364.0" layoutY="12.0" text="TP" textFill="#09557c">
+            <Rectangle arcHeight="25.0" arcWidth="25.0" disable="true" fill="#ffffff00" height="597.0" layoutX="462.0" layoutY="7.0" stroke="#a6d5ff" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeMiterLimit="1.0" strokeType="INSIDE" width="716.0" />
+            <Rectangle arcHeight="25.0" arcWidth="25.0" disable="true" fill="#ffffff00" height="36.0" layoutX="20.0" layoutY="6.0" stroke="#00bbff" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeMiterLimit="1.0" strokeType="INSIDE" width="430.0" />
+            <Label layoutX="38.0" layoutY="12.0" text="TP" textFill="#09557c">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Label layoutX="389.0" layoutY="14.0" text="| Simulation de Systèmes" textFill="#09557c">
+            <Label layoutX="63.0" layoutY="14.0" text="| Simulation de Systèmes" textFill="#09557c">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <ImageView fitHeight="25.0" fitWidth="151.0" layoutX="641.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="25.0" fitWidth="151.0" layoutX="315.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../GeneAleatoire/GeneAleatoire/src/application/3iLcomplet.png" />
                </image>
@@ -53,20 +49,20 @@
             <Label layoutX="78.0" layoutY="135.0" text="Cadence de traitement (μ) :" />
             <Label layoutX="78.0" layoutY="166.0" text="Nombre de stations :" />
             <Label layoutX="78.0" layoutY="196.0" text="Nombre de clients :" />
-            <TextField layoutX="264.0" layoutY="100.0" prefHeight="25.0" prefWidth="63.0" />
-            <TextField layoutX="264.0" layoutY="131.0" prefHeight="25.0" prefWidth="63.0" />
-            <TextField layoutX="264.0" layoutY="162.0" prefHeight="25.0" prefWidth="63.0" />
-            <TextField layoutX="264.0" layoutY="192.0" prefHeight="25.0" prefWidth="63.0" />
+            <TextField fx:id="TF_lambda" layoutX="264.0" layoutY="100.0" prefHeight="25.0" prefWidth="63.0" />
+            <TextField fx:id="TF_mu" layoutX="264.0" layoutY="131.0" prefHeight="25.0" prefWidth="63.0" />
+            <TextField fx:id="TF_nbStations" layoutX="264.0" layoutY="162.0" prefHeight="25.0" prefWidth="63.0" />
+            <TextField fx:id="TF_nbClients" layoutX="264.0" layoutY="192.0" prefHeight="25.0" prefWidth="63.0" />
             <Label layoutX="341.0" layoutY="103.0" text="clients/h " />
             <Label layoutX="341.0" layoutY="135.0" text="clients/h " />
             <Label layoutX="342.0" layoutY="166.0" text="stations" />
             <Label layoutX="342.0" layoutY="197.0" text="clients" />
-            <Button layoutX="118.0" layoutY="244.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: #00cc66;" text="Simuler" textFill="WHITE">
+            <Button fx:id="BT_simuler" layoutX="118.0" layoutY="253.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: #00cc66;" text="Simuler" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button layoutX="230.0" layoutY="244.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: #ff0000;" text="Arrêter" textFill="WHITE">
+            <Button fx:id="BT_arreter" layoutX="230.0" layoutY="253.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: #ff0000;" text="Arrêter" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -76,17 +72,17 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="lbMoyenneThExpo" layoutX="205.0" layoutY="346.0" prefHeight="30.0" prefWidth="49.0" style="-fx-background-color: #F4F4F4;" text="0.84" textFill="RED">
+            <Label fx:id="LB_psy" layoutX="205.0" layoutY="346.0" prefHeight="30.0" prefWidth="49.0" style="-fx-background-color: #F4F4F4;" text="0.84" textFill="RED">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="247.0" layoutY="345.0" prefHeight="30.0" prefWidth="24.0" style="-fx-background-color: #F4F4F4;" text="&lt;" textFill="#09557c">
+            <Label fx:id="LB_signe" layoutX="247.0" layoutY="345.0" prefHeight="30.0" prefWidth="24.0" style="-fx-background-color: #F4F4F4;" text="&lt;" textFill="#09557c">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="269.0" layoutY="345.0" prefHeight="30.0" prefWidth="19.0" style="-fx-background-color: #F4F4F4;" text="1" textFill="#09557c">
+            <Label fx:id="LB_nbMaxErgo" layoutX="269.0" layoutY="345.0" prefHeight="30.0" prefWidth="19.0" style="-fx-background-color: #F4F4F4;" text="1" textFill="#09557c">
                <font>
                   <Font size="20.0" />
                </font>
@@ -121,92 +117,103 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="lbMoyenneThExpo1" layoutX="319.0" layoutY="399.0" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: #F4F4F4;" text="0.84104859203" textFill="RED">
+            <Label fx:id="LB_NbS" layoutX="319.0" layoutY="399.0" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: #F4F4F4;" text="0.84104859203" textFill="RED">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="lbMoyenneThExpo11" layoutX="319.0" layoutY="424.0" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: #F4F4F4;" text="0.84104859203" textFill="RED">
+            <Label fx:id="LB_TAS" layoutX="319.0" layoutY="424.0" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: #F4F4F4;" text="0.84104859203" textFill="RED">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="lbMoyenneThExpo111" layoutX="319.0" layoutY="450.0" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: #F4F4F4;" text="0.84104859203" textFill="RED">
+            <Label fx:id="LB_NbF" layoutX="319.0" layoutY="450.0" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: #F4F4F4;" text="0.84104859203" textFill="RED">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="lbMoyenneThExpo1111" layoutX="319.0" layoutY="476.0" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: #F4F4F4;" text="0.84104859203" textFill="RED">
+            <Label fx:id="LB_TAF" layoutX="319.0" layoutY="476.0" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: #F4F4F4;" text="0.84104859203" textFill="RED">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="lbMoyenneThExpo11111" layoutX="319.0" layoutY="501.0" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: #F4F4F4;" text="0.84104859203" textFill="RED">
+            <Label fx:id="LB_NbSI" layoutX="319.0" layoutY="501.0" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: #F4F4F4;" text="0.84104859203" textFill="RED">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="128.0" layoutY="546.0" style="-fx-background-color: #F4F4F4;" text="Le système est Ergodique" textFill="#09557c">
+            <Label fx:id="LB_ergodique" layoutX="128.0" layoutY="563.0" style="-fx-background-color: #F4F4F4;" text="Le système est Ergodique" textFill="#09557c">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="38.0" layoutX="569.0" layoutY="123.0" stroke="#08354b" strokeMiterLimit="1.0" strokeType="INSIDE" width="88.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="38.0" layoutX="705.0" layoutY="123.0" stroke="#08354b" strokeMiterLimit="1.0" strokeType="INSIDE" width="88.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="38.0" layoutX="842.0" layoutY="123.0" stroke="#08354b" strokeMiterLimit="1.0" strokeType="INSIDE" width="88.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="38.0" layoutX="979.0" layoutY="123.0" stroke="#08354b" strokeMiterLimit="1.0" strokeType="INSIDE" width="88.0" />
-            <Label layoutX="1096.0" layoutY="78.0" style="-fx-background-color: #F4F4F4;" text="M/M/" textFill="RED">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="38.0" layoutX="569.0" layoutY="34.0" stroke="#08354b" strokeMiterLimit="1.0" strokeType="INSIDE" width="88.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="38.0" layoutX="705.0" layoutY="34.0" stroke="#08354b" strokeMiterLimit="1.0" strokeType="INSIDE" width="88.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="38.0" layoutX="842.0" layoutY="34.0" stroke="#08354b" strokeMiterLimit="1.0" strokeType="INSIDE" width="88.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="38.0" layoutX="979.0" layoutY="34.0" stroke="#08354b" strokeMiterLimit="1.0" strokeType="INSIDE" width="88.0" />
+            <Label layoutX="1096.0" layoutY="41.0" style="-fx-background-color: #F4F4F4;" text="M/M/" textFill="RED">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label layoutX="1136.0" layoutY="78.0" style="-fx-background-color: #F4F4F4;" text="1" textFill="RED">
+            <Label fx:id="LB_MM" layoutX="1135.0" layoutY="41.0" style="-fx-background-color: #F4F4F4;" text="1" textFill="RED">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label layoutX="715.0" layoutY="134.0" text="File d'attente" />
-            <Line endX="45.0" layoutX="524.0" layoutY="142.0" startX="-4.4444580078125" />
-            <Line endX="-52.66668701171875" layoutX="757.0" layoutY="143.0" startX="-100.0" />
-            <Line endX="-52.66668701171875" layoutX="894.0" layoutY="143.0" startX="-100.0" />
-            <Line endX="-52.66668701171875" layoutX="1031.0" layoutY="143.0" startX="-100.0" />
-            <Line endX="45.0" endY="17.0" layoutX="524.0" layoutY="125.0" startX="37.33331298828125" startY="9.666671752929688" />
-            <Line endX="45.0" endY="17.0" layoutX="934.0" layoutY="126.0" startX="37.33331298828125" startY="9.666671752929688" />
-            <Line endX="45.0" endY="17.0" layoutX="797.0" layoutY="126.0" startX="37.33331298828125" startY="9.666671752929688" />
-            <Line endX="45.0" endY="17.0" layoutX="660.0" layoutY="126.0" startX="37.33331298828125" startY="9.666671752929688" />
-            <Line endX="29.77777099609375" endY="16.888885498046875" layoutX="532.0" layoutY="132.0" startX="37.33331298828125" startY="9.666671752929688" />
-            <Line endX="29.77777099609375" endY="16.888885498046875" layoutX="668.0" layoutY="133.0" startX="37.33331298828125" startY="9.666671752929688" />
-            <Line endX="29.77777099609375" endY="16.888885498046875" layoutX="805.0" layoutY="133.0" startX="37.33331298828125" startY="9.666671752929688" />
-            <Line endX="29.77777099609375" endY="16.888885498046875" layoutX="942.0" layoutY="133.0" startX="37.33331298828125" startY="9.666671752929688" />
-            <Label layoutX="513.0" layoutY="123.0" text="Clients">
+            <Label layoutX="715.0" layoutY="45.0" text="File d'attente" />
+            <Line endX="45.0" layoutX="524.0" layoutY="53.0" startX="-4.4444580078125" />
+            <Line endX="-52.66668701171875" layoutX="757.0" layoutY="54.0" startX="-100.0" />
+            <Line endX="-52.66668701171875" layoutX="894.0" layoutY="54.0" startX="-100.0" />
+            <Line endX="-52.66668701171875" layoutX="1031.0" layoutY="54.0" startX="-100.0" />
+            <Line endX="45.0" endY="17.0" layoutX="524.0" layoutY="36.0" startX="37.33331298828125" startY="9.666671752929688" />
+            <Line endX="45.0" endY="17.0" layoutX="934.0" layoutY="37.0" startX="37.33331298828125" startY="9.666671752929688" />
+            <Line endX="45.0" endY="17.0" layoutX="797.0" layoutY="37.0" startX="37.33331298828125" startY="9.666671752929688" />
+            <Line endX="45.0" endY="17.0" layoutX="660.0" layoutY="37.0" startX="37.33331298828125" startY="9.666671752929688" />
+            <Line endX="29.77777099609375" endY="16.888885498046875" layoutX="532.0" layoutY="43.0" startX="37.33331298828125" startY="9.666671752929688" />
+            <Line endX="29.77777099609375" endY="16.888885498046875" layoutX="668.0" layoutY="44.0" startX="37.33331298828125" startY="9.666671752929688" />
+            <Line endX="29.77777099609375" endY="16.888885498046875" layoutX="805.0" layoutY="44.0" startX="37.33331298828125" startY="9.666671752929688" />
+            <Line endX="29.77777099609375" endY="16.888885498046875" layoutX="942.0" layoutY="44.0" startX="37.33331298828125" startY="9.666671752929688" />
+            <Label layoutX="513.0" layoutY="34.0" text="Clients">
                <font>
                   <Font size="11.0" />
                </font>
             </Label>
-            <Label layoutX="596.0" layoutY="127.0" text="Entrée" />
-            <Label layoutX="600.0" layoutY="142.0" text="λ = " textFill="RED" />
-            <Label layoutX="620.0" layoutY="142.0" text="3" textFill="RED" />
-            <Label layoutX="867.0" layoutY="127.0" prefHeight="20.0" prefWidth="43.0" text="Station" />
-            <Label layoutX="873.0" layoutY="141.0" text="μ = " textFill="RED" />
-            <Label layoutX="893.0" layoutY="141.0" text="3" textFill="RED" />
-            <Label layoutX="1007.0" layoutY="133.0" text="Sortie" />
-            <Label layoutX="861.0" layoutY="104.0" text="1 pompe" textFill="RED" />
-            <Line endX="193.77783203125" layoutX="888.0" layoutY="174.0" startX="-200.88885498046875" />
-            <Line endX="29.77777099609375" endY="16.888885498046875" layoutX="657.0" layoutY="157.0" startX="29.77777099609375" startY="7.111114501953125" />
-            <Line endX="29.77777099609375" endY="16.888885498046875" layoutX="1052.0" layoutY="157.0" startX="29.77777099609375" startY="7.111114501953125" />
-            <Line endX="193.77783203125" layoutX="900.0" layoutY="199.0" startX="-345.77777099609375" />
-            <Line endX="29.77777099609375" endY="16.888885498046875" layoutX="524.0" layoutY="182.0" startX="29.77777099609375" startY="7.111114501953125" />
-            <Line endX="29.77777099609375" endY="16.888885498046875" layoutX="1064.0" layoutY="182.0" startX="29.77777099609375" startY="7.111114501953125" />
-            <Label layoutX="842.0" layoutY="174.0" text="Système d'attente">
+            <Label layoutX="596.0" layoutY="38.0" text="Entrée" />
+            <Label layoutX="600.0" layoutY="53.0" text="λ = " textFill="RED" />
+            <Label fx:id="LB_lambda" layoutX="620.0" layoutY="53.0" text="3" textFill="RED" />
+            <Label layoutX="867.0" layoutY="38.0" prefHeight="20.0" prefWidth="43.0" text="Station" />
+            <Label layoutX="873.0" layoutY="52.0" text="μ = " textFill="RED" />
+            <Label fx:id="LB_mu" layoutX="893.0" layoutY="52.0" text="3" textFill="RED" />
+            <Label layoutX="1007.0" layoutY="46.0" text="Sortie" />
+            <Label fx:id="LB_nbPompes" layoutX="861.0" layoutY="15.0" text="1 pompe" textFill="RED" />
+            <VBox fx:id="vb_voitures_entrantes" layoutX="543.0" layoutY="130.0" prefHeight="72.0" prefWidth="516.0" />
+            <Line endX="394.7070617675781" endY="25.999996185302734" layoutX="171.0" layoutY="119.0" startX="871.3333740234375" startY="26.000015258789062" stroke="#b2b2b2" style="-fx-stroke-dash-array: 5;" />
+            <Label layoutX="538.0" layoutY="121.0" text="Événement" />
+            <Label layoutX="744.0" layoutY="109.0" style="-fx-background-color: #F4F4F4;" text="Véhicules entrants " textFill="#09557c">
                <font>
-                  <Font size="11.0" />
+                  <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="764.0" layoutY="201.0" text="Phénomène d'attente">
+            <Label layoutX="1069.0" layoutY="229.0" text="Temps" />
+            <VBox fx:id="vb_voitures_sortantes" layoutX="543.0" layoutY="290.0" prefHeight="72.0" prefWidth="516.0" />
+            <Line endX="394.7070617675781" endY="25.999996185302734" layoutX="171.0" layoutY="279.0" startX="871.3333740234375" startY="26.000015258789062" stroke="#b2b2b2" style="-fx-stroke-dash-array: 5;" />
+            <Label layoutX="744.0" layoutY="269.0" style="-fx-background-color: #F4F4F4;" text="Véhicules sortants" textFill="#09557c">
                <font>
-                  <Font size="11.0" />
+                  <Font name="System Bold" size="15.0" />
                </font>
             </Label>
+            <Label layoutX="1069.0" layoutY="389.0" text="Temps" />
+            <VBox fx:id="vb_voitures_file" layoutX="543.0" layoutY="457.0" prefHeight="72.0" prefWidth="516.0" />
+            <Line endX="394.7070617675781" endY="25.999996185302734" layoutX="171.0" layoutY="446.0" startX="871.3333740234375" startY="26.000015258789062" stroke="#b2b2b2" style="-fx-stroke-dash-array: 5;" />
+            <Label layoutX="538.0" layoutY="448.0" text="Nb de voitures " />
+            <Label layoutX="702.0" layoutY="436.0" style="-fx-background-color: #F4F4F4;" text="Nombre de voitures dans la file" textFill="#09557c">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="1069.0" layoutY="556.0" text="Temps" />
+            <Label layoutX="534.0" layoutY="282.0" text="Événement" />
          </children>
       </Pane>
    </top>

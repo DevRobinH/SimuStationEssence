@@ -13,7 +13,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("Station.fxml"));
-			Scene scene = new Scene(root,1200,600);
+			Scene scene = new Scene(root,1200,630);
 			
 			// Titre de la fenetre
 			primaryStage.setTitle("Station Service Carburant");
