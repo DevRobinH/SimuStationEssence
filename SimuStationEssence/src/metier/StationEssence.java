@@ -14,13 +14,13 @@ import java.util.Queue;
  */
 public class StationEssence {
     /** cadence d'arrivée des voitures (clients) à la station essence */
-	private int lambda;
+	private double lambda;
 	
 	/** cadence de traitement */
-	private int mu;
+	private double mu;
 	
 	/** nombre de pompes de la station */
-	private int nbPompes;
+	private double nbPompes;
 	
 	/** nombre de client arrivant à la station */
 	private int nbClients;
@@ -53,7 +53,7 @@ public class StationEssence {
 	private double psi;
 
 	/**
-	 * Initialisation d'une station essence
+	 * Initialisation d'une station essence sans paramètre
 	 */
 	public StationEssence() {
 		super();
@@ -67,6 +67,7 @@ public class StationEssence {
 		this.nbF = 0.0;
 		this.nbSi = 0.0;
 		this.taF = 0.0;
+		this.psi = 0.0;
 	}
     /**
      * Calcul du facteur de charge
@@ -74,7 +75,7 @@ public class StationEssence {
      * @param mu  cadence de traitement
      * @return psi le facteur de charge
      */
-	public double calculPsi(int lambda, int mu) {
+	public double calculPsi(double lambda, double mu) {
 		return lambda/mu;
 	}
 	
@@ -101,7 +102,7 @@ public class StationEssence {
 	 * @param mu cadence de traitement
 	 * @return taS
 	 */
-	public double calculTAS(int lambda, int mu) {
+	public double calculTAS(double lambda, double mu) {
 		return 1 / (mu - lambda);
 	}
 	
@@ -120,7 +121,7 @@ public class StationEssence {
 	 * @param psi facteur de charge
 	 * @return taF
 	 */
-	public double calculTaF(int mu, double psi) {
+	public double calculTaF(double mu, double psi) {
 		return psi/(mu * (1 - psi));
 	}
 	
@@ -134,37 +135,92 @@ public class StationEssence {
 	}
 	
 	/**
+	 * Simulation en mode markovien
+	 * @param lambda Cadence d'arrivée du phénomène
+	 * @param mu Cadence de traitement du système
+	 * @param nbStation nombre de pompe du système
+	 * @param nbClient nombre de personne venant se ravitailler en essence
+	 */
+	public void chaineMarkovienne(double lambda, double mu, int nbStation, int nbClient) {
+		if (nbStation == 1) {
+			mm1(lambda, mu, nbClient);
+		} else {
+			mms(lambda, mu, nbStation, nbClient);
+		}
+	}
+	
+	private void mms(double lambda2, double mu2, int nbStation, int nbClient) {
+		
+	}
+	
+	/**
+	 * Simulation en mode markovien en mode mm1
+	 * @param lambda Cadence d'arrivée du phénomène
+	 * @param mu Cadence de traitement du système
+	 * @param nbClient nombre de personne venant se ravitailler en essence
+	 */
+	private void mm1 (double lambda, double mu, int nbClient) {
+		// Définition des paramètres
+		this.lambda = lambda;
+		this.mu = mu;
+		this.nbClients = nbClient;
+		
+		// Calcul de psi 
+		this.psi = calculPsi(lambda, mu);
+		
+		// file d'attente
+		this.fileAttenteClient = new LinkedList<>();
+		// Génération des clients de la station
+		for (int i = 0; i < nbClient; i ++) {
+			if (i == 0) {
+				this.fileAttenteClient.add(new Voiture(GenerationLois.loiExponentielle(lambda)));
+			} else {
+				this.fileAttenteClient.add(new Voiture(GenerationLois.loiExponentielle(lambda)+fileAttenteClient.get(i-1).getHeureArrivee()));
+			}
+		}
+		// génération de la station essence
+		Pompe pompeEss = new Pompe();
+		     
+		//Calcul des moyennes
+		this.setNbS(calculNbS(psi));
+		this.setNbF(calculNbF(this.psi));
+		this.setTaF(calculTaF(mu, this.psi));
+		this.setTaS(calculTAS(lambda, mu));
+		
+	}
+	
+	/**
 	 * @return the lambda
 	 */
-	public int getLambda() {
+	public double getLambda() {
 		return lambda;
 	}
 
 	/**
 	 * @param lambda the lambda to set
 	 */
-	public void setLambda(int lambda) {
+	public void setLambda(double lambda) {
 		this.lambda = lambda;
 	}
 
 	/**
 	 * @return the mu
 	 */
-	public int getMu() {
+	public double getMu() {
 		return mu;
 	}
 
 	/**
 	 * @param mu the mu to set
 	 */
-	public void setMu(int mu) {
+	public void setMu(double mu) {
 		this.mu = mu;
 	}
 
 	/**
 	 * @return the nbPompes
 	 */
-	public int getNbPompes() {
+	public double getNbPompes() {
 		return nbPompes;
 	}
 
