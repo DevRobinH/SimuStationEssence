@@ -39,14 +39,14 @@ public class TestStationEssence {
 		
 		
 		for (Map.Entry<Double, Integer> releve : stEss.getContenuBuffer().entrySet()) {
-			//System.out.println(releve.getKey() + " --> " + releve.getValue());
+			System.out.println(releve.getKey() + " --> " + releve.getValue());
 			entree.add(releve.getKey());
 		}
 
 		// sortants
 		for (int i = 0; i < stEss.getTempsSorties().size(); i++) {
 			sortie.add(stEss.getTempsSorties().get(i));
-		//	System.out.println(stEss.getTempsSorties().get(i));
+			System.out.println(stEss.getTempsSorties().get(i));
 			//serieSortant.add(sortie, 1);
 }
 
