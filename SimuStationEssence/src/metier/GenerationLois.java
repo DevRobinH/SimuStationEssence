@@ -52,14 +52,16 @@ public class GenerationLois {
 
 	/**
 	 * Génération de nombre aléatoire suivant une loi normale
+	 * @param moyenne
+	 * @param ecarType
 	 * @return un nombre aléatoire
 	 */
-	public static double loiNormale() {
+	public static double loiNormale(double moyenne, double ecarType) {
 		// Initialisation de deux nombre suivant une loi uniforme
 		double u = loiUniforme();
 		double v = loiUniforme();
 
-		return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+		return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v) * ecarType + moyenne;
 	}
 
 	/** Génération de nombre aléatoire suivant une loi de poisson discrete
