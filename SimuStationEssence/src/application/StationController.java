@@ -165,7 +165,8 @@ public class StationController {
 		
 		lc_voitures_file.setHorizontalGridLinesVisible(false);
 		lc_voitures_file.setVerticalGridLinesVisible(false);
-		
+		// Désactive les symbole sur le 3ème graphe
+		lc_voitures_file.setCreateSymbols(false);
 		// Plage sur l'axe des abscisses
 		xAxis_entrantes.setAutoRanging(false);
 		xAxis_sortantes.setAutoRanging(false);
@@ -513,7 +514,7 @@ public class StationController {
 		// Supprime les barres du graphe
 		lc_voitures_entrantes.removeAllVerticalMarker();
 		lc_voitures_sortantes.removeAllVerticalMarker();		
-		//lc_voitures_file.getData().removeAll();
+		lc_voitures_file.getData().removeAll();
 				
 		System.out.println("\nDonnées vidées");
 	}
