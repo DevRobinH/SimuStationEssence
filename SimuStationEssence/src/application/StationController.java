@@ -2,15 +2,19 @@ package application;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Orientation;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import metier.LineChartWithMarkers;
+import metier.StationEssence;
 
 public class StationController {
 	
@@ -42,19 +46,34 @@ public class StationController {
 	Label LB_nbMaxErgo;
 	
 	@FXML
-	Label LB_NbS;
+	Label LB_NbS_th;
 	
 	@FXML
-	Label LB_TAS;
+	Label LB_NbS_obs;
 	
 	@FXML
-	Label LB_NbF;
+	Label LB_TAS_th;
 	
 	@FXML
-	Label LB_TAF;
+	Label LB_TAS_obs;
 	
 	@FXML
-	Label LB_NbSI;
+	Label LB_NbF_th;
+	
+	@FXML
+	Label LB_NbF_obs;
+	
+	@FXML
+	Label LB_TAF_th;
+	
+	@FXML
+	Label LB_TAF_obs;
+	
+	@FXML
+	Label LB_NbSI_th;
+	
+	@FXML
+	Label LB_NbSI_obs;
 	
 	@FXML
 	Label LB_ergodique;
@@ -116,11 +135,14 @@ public class StationController {
 		// On active le bouton Markovien
 		bt_Markov.setSelected(true);
 		
+		// On masque les labels sans valeurs pour l'instant
+		afficherLabels(false);
+		
 		// Valeurs par défauts
-		TF_lambda.setText("20");
+		TF_lambda.setText("15");
 		TF_mu.setText("20");
-		TF_nbStations.setText("6");
-		TF_nbClients.setText("3");
+		TF_nbStations.setText("1");
+		TF_nbClients.setText("350");
 		
 		// Le lineChart est ajouté dans la Vbox
 		vb_voitures_entrantes.getChildren().add(lc_voitures_entrantes);
@@ -189,7 +211,7 @@ public class StationController {
 	 */
 	public void actionSimuler(ActionEvent evt){
 
-		System.out.println("\n bt Simuler");
+		System.out.println("\nBt Simuler");
 		
 		// On vérouille le bouton simuler
 		BT_simuler.setDisable(true);
@@ -198,17 +220,23 @@ public class StationController {
 		BT_arreter.setDisable(false);
 		
 		// On vide le graphe
-		//clearChart();
+		clearChart();
 		
 		// Récupération des paramètres saisis
-		recupLambda();
-		recupMu();
-		recupNbStations();
-		recupNbClients();
-		recupRadioBt();
+		double unLambda = recupLambda();
+		double unMu = recupMu();
+		int unNbStation = recupNbStations();
+		int unNbClients = recupNbClients();
+		boolean choixMarkov = recupRadioBt();
+		
+		// Met à jour le shéma
+		updateSchema(unLambda, unMu, unNbStation);
 		
 		// Insère les données dans le graphe
-		//insertData();
+		insertData(unLambda, unMu, unNbStation, unNbClients, choixMarkov);
+		
+		// Affichage des labels cachés
+		afficherLabels(true);
 	}
 	
 	/**
@@ -218,109 +246,244 @@ public class StationController {
 	 */
 	public void actionArreter(ActionEvent evt){
 
-		System.out.println("\n bt Arrêter");
+		System.out.println("\nBt Arrêter");
 		
 		// Vérouillage/dévérouillage des boutons
 		BT_simuler.setDisable(false);
 		BT_arreter.setDisable(true);
-		
-		//clearChart();
+
 	}
 
 	/**
 	 * Récupère le lambda
 	 */
-	public void recupLambda(){
+	public double recupLambda(){
 
 		// On récupère le champ
-		String recup = TF_lambda.getText();
+		double recup = Double.parseDouble(TF_lambda.getText());
 
-		// Si le champ à récupérer n'est pas null
-		if (!recup.equals("")){
-
-			System.out.println("\nLambda:");
-			System.out.println(recup);				
-		}
-		else{
+		// Si le champ à récupérer est null
+		if (recup == 0.0){
 			System.out.println("\nErreur récupération Lambda");
 		}
+		
+		return recup;
 	}
 	
 	/**
 	 * Récupère Mu
 	 */
-	public void recupMu(){
+	public double recupMu(){
 
 		// On récupère le champ
-		String recup = TF_mu.getText();
+		double recup = Double.parseDouble(TF_mu.getText());
 
-		// Si le champ à récupérer n'est pas null
-		if (!recup.equals("")){
-
-			System.out.println("\nMu:");
-			System.out.println(recup);				
-		}
-		else{
+		// Si le champ à récupérer est null
+		if (recup == 0.0){
 			System.out.println("\nErreur récupération Mu");
 		}
+		
+		return recup;
 	}
 	
 	/**
 	 * Récupère le nombre de stations
 	 */
-	public void recupNbStations(){
+	public int recupNbStations(){
 
 		// On récupère le champ
-		String recup = TF_nbStations.getText();
+		int recup = Integer.parseInt(TF_nbStations.getText());
 
-		// Si le champ à récupérer n'est pas null
-		if (!recup.equals("")){
-
-			System.out.println("\nNb stations:");
-			System.out.println(recup);				
-		}
-		else{
+		// Si le champ à récupérer est null
+		if (recup == 0){
 			System.out.println("\nErreur récupération du nombre de stations");
 		}
+		
+		return recup;
 	}
 	
 	/**
 	 * Récupère le nombre de clients
 	 */
-	public void recupNbClients(){
+	public int recupNbClients(){
 
 		// On récupère le champ
-		String recup = TF_nbClients.getText();
+		int recup = Integer.parseInt(TF_nbClients.getText());
 
-		// Si le champ à récupérer n'est pas null
-		if (!recup.equals("")){
+		// Si le champ à récupérer est null
+		if (recup == 0){
 
-			System.out.println("\nNb Clients:");
-			System.out.println(recup);				
-		}
-		else{
 			System.out.println("\nErreur récupération du nombre de clients");
 		}
+		
+		return recup;
 	}
 	
 	/**
 	 * Récupère le nombre de stations
 	 */
-	public void recupRadioBt(){
+	public boolean recupRadioBt(){
 
 		// On récupère le champ
-		String recup = TF_nbStations.getText();
-
+		RadioButton chk = (RadioButton)bt_Markov.getToggleGroup().getSelectedToggle(); // Cast object to radio button
+        String chkTxt = chk.getText();
+		
+		boolean estMarkov = false;
+		
 		// Si le champ à récupérer n'est pas null
-		if (!recup.equals("")){
+		if (!chkTxt.equals("")){
 
-			System.out.println("\nNb Stations:");
-			System.out.println(recup);				
+			// Si le bt Markovien est sélectionné
+			if (chkTxt.equals("Markovien")){
+				estMarkov = true;
+				System.out.println("\nMarkovien demandé");	
+			}else{
+				estMarkov = false;
+				System.out.println("\nNon Markovien demandé");	
+			}
+			
 		}
 		else{
-			System.out.println("\nErreur récupération du nombre de stations");
+			System.out.println("\nErreur récupération chk Radio button");
 		}
+		
+		return estMarkov;
 	}
 	
+	/**
+	 * Met à jour les informations du schéma
+	 */
+	public void updateSchema(double unLambda, double unMu, int unNbStation){
+		
+		// Convertion en int
+		int recupLambda = (int)unLambda;
+		int recupMu = (int)unMu;
+		
+		LB_lambda.setText(String.valueOf(recupLambda));
+		LB_mu.setText(String.valueOf(recupMu));
+		
+		String pompe = "";
+		
+		// Affichage différent selon le nombre de pompes
+		if(unNbStation == 0 || unNbStation == 1){
+			pompe = " pompe";
+		}else{
+			pompe = " pompes";
+		}
+		
+		LB_nbPompes.setText(String.valueOf(unNbStation) + pompe);
+		LB_MM.setText(String.valueOf(unNbStation));
+
+	}
+	
+	/**
+	 * Insère des données dans le graphe
+	 */
+	public void insertData(double lambda, double mu, int nbStations, int nbClients, boolean estMarkov){
+		
+		System.out.println("\nDonnées avant insertion :");
+		System.out.println(" -Lambda: " + lambda);
+		System.out.println(" -Mu: "+ mu);
+		System.out.println(" -NbStations: " + nbStations);
+		System.out.println(" -NbClients: " + nbClients);
+		System.out.println(" -Markovien: " + estMarkov);
+		
+		// On créer une instance de la classe StationEssence
+		StationEssence uneStation = new StationEssence();
+		uneStation.chaineMarkovienne(lambda, mu, nbStations, nbClients);
+		
+		/*for(int i =0; i < stEss.getFileAttenteClient().size(); i++) {
+			System.out.println(stEss.getListeTempsEntree().get(i));
+		}*/	
+	
+		// Ajout des valeurs théoriques
+		LB_NbS_th.setText(String.valueOf(uneStation.getNbS()));				
+		LB_TAS_th.setText(String.valueOf(uneStation.getTaS()));		
+		LB_NbF_th.setText(String.valueOf(uneStation.getNbF()));			
+		LB_TAF_th.setText(String.valueOf(uneStation.getTaF()));		
+		LB_NbSI_th.setText(String.valueOf(uneStation.getNbSi()));
+		
+		LB_psy.setText(String.valueOf(uneStation.getPsi()));
+		
+		LB_nbMaxErgo.setText(String.valueOf(nbStations));
+		
+		// Ajout des valeurs observées
+		
+		
+		// Si psy < nbStations
+		if(uneStation.getPsi() < nbStations){
+			LB_signe.setText("<");
+			LB_ergodique.setText("Le système est Ergodique");
+		}else {
+			LB_signe.setText(">");
+			LB_ergodique.setText("Le système n'est pas Ergodique");
+		}			
+	}
+
+	/**
+	 * Trace une barre verticale sur notre graphe
+	 * @param lc : lineChart
+	 * @param xAxis : axe des abscisses du graphe
+	 * @param x : valeur en abscisse
+	 * @param y : valeur en ordonnée
+	 */
+	public void setVerticalBar(LineChartWithMarkers<Number, Number> lc, NumberAxis xAxis, double x, double y){
+		
+		// La barre est crée selon les paramètres x et y
+		Data<Number, Number> verticalBar = new Data<>(x, y);
+		
+		// Ajout de la barre au graphe
+	    lc.addVerticalValueMarker(verticalBar);
+	    
+	    // Personnalisation
+	    Slider verticalBarSlider = new Slider(xAxis.getLowerBound(), xAxis.getUpperBound(), 0);
+	    verticalBarSlider.setOrientation(Orientation.HORIZONTAL);
+	    verticalBarSlider.setShowTickLabels(true);
+	    verticalBarSlider.valueProperty().bindBidirectional(verticalBar.XValueProperty());
+	    verticalBarSlider.minProperty().bind(xAxis.lowerBoundProperty());
+	    verticalBarSlider.maxProperty().bind(xAxis.upperBoundProperty());
+	}
+	
+	/**
+	 * Vide les données des graphes
+	 */
+	public void clearChart(){
+
+		// Supprime les barres du graphe
+		lc_voitures_entrantes.removeAllVerticalMarker();
+		lc_voitures_sortantes.removeAllVerticalMarker();		
+		lc_voitures_file.getData().removeAll();
+				
+		System.out.println("\nDonnées vidées");
+	}
+	
+	/**
+	 * Masque tous les Labels avant chaque clic de "Simuler"
+	 */
+	public void afficherLabels(boolean isOrNotVisible){
+
+		LB_NbS_th.setVisible(isOrNotVisible);				
+		LB_NbS_obs.setVisible(isOrNotVisible);			
+		LB_TAS_th.setVisible(isOrNotVisible);			
+		LB_TAS_obs.setVisible(isOrNotVisible);			
+		LB_NbF_th.setVisible(isOrNotVisible);			
+		LB_NbF_obs.setVisible(isOrNotVisible);			
+		LB_TAF_th.setVisible(isOrNotVisible);			
+		LB_TAF_obs.setVisible(isOrNotVisible);			
+		LB_NbSI_th.setVisible(isOrNotVisible);		
+		LB_NbSI_obs.setVisible(isOrNotVisible);
+		
+		LB_psy.setVisible(isOrNotVisible);
+		LB_signe.setVisible(isOrNotVisible);
+		LB_nbMaxErgo.setVisible(isOrNotVisible);
+	
+		LB_ergodique.setVisible(isOrNotVisible);
+		
+		LB_lambda.setVisible(isOrNotVisible);
+		LB_mu.setVisible(isOrNotVisible);
+		LB_nbPompes.setVisible(isOrNotVisible);
+		LB_MM.setVisible(isOrNotVisible);
+		
+	}
 }
 

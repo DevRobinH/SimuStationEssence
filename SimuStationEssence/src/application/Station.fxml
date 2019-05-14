@@ -126,27 +126,27 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="LB_NbS" layoutX="307.0" layoutY="414.0" prefHeight="30.0" prefWidth="58.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="RED">
+            <Label fx:id="LB_NbS_obs" layoutX="307.0" layoutY="414.0" prefHeight="30.0" prefWidth="58.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="RED">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="LB_TAS" layoutX="307.0" layoutY="439.0" prefHeight="30.0" prefWidth="59.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="RED">
+            <Label fx:id="LB_TAS_obs" layoutX="307.0" layoutY="439.0" prefHeight="30.0" prefWidth="59.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="RED">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="LB_NbF" layoutX="307.0" layoutY="465.0" prefHeight="30.0" prefWidth="57.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="RED">
+            <Label fx:id="LB_NbF_obs" layoutX="307.0" layoutY="465.0" prefHeight="30.0" prefWidth="57.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="RED">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="LB_TAF" layoutX="307.0" layoutY="491.0" prefHeight="30.0" prefWidth="56.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="RED">
+            <Label fx:id="LB_TAF_obs" layoutX="307.0" layoutY="491.0" prefHeight="30.0" prefWidth="56.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="RED">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="LB_NbSI" layoutX="307.0" layoutY="516.0" prefHeight="30.0" prefWidth="55.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="RED">
+            <Label fx:id="LB_NbSI_obs" layoutX="307.0" layoutY="516.0" prefHeight="30.0" prefWidth="55.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="RED">
                <font>
                   <Font size="14.0" />
                </font>
@@ -188,14 +188,14 @@
                   <Font size="11.0" />
                </font>
             </Label>
-            <Label layoutX="596.0" layoutY="38.0" text="Entrée" />
-            <Label layoutX="600.0" layoutY="53.0" text="λ = " textFill="RED" />
-            <Label fx:id="LB_lambda" layoutX="620.0" layoutY="53.0" text="3" textFill="RED" />
+            <Label layoutX="592.0" layoutY="38.0" text="Arrivées" />
+            <Label layoutX="596.0" layoutY="53.0" text="λ = " textFill="RED" />
+            <Label fx:id="LB_lambda" layoutX="617.0" layoutY="53.0" text="3" textFill="RED" />
             <Label layoutX="867.0" layoutY="38.0" prefHeight="20.0" prefWidth="43.0" text="Station" />
-            <Label layoutX="873.0" layoutY="52.0" text="μ = " textFill="RED" />
-            <Label fx:id="LB_mu" layoutX="893.0" layoutY="52.0" text="3" textFill="RED" />
-            <Label layoutX="1007.0" layoutY="46.0" text="Sortie" />
-            <Label fx:id="LB_nbPompes" layoutX="861.0" layoutY="15.0" text="1 pompe" textFill="RED" />
+            <Label layoutX="868.0" layoutY="52.0" text="μ = " textFill="RED" />
+            <Label fx:id="LB_mu" layoutX="888.0" layoutY="52.0" text="3" textFill="RED" />
+            <Label layoutX="1003.0" layoutY="45.0" text="Sorties" />
+            <Label fx:id="LB_nbPompes" layoutX="858.0" layoutY="15.0" text="1 pompe" textFill="RED" />
             <VBox fx:id="vb_voitures_entrantes" layoutX="543.0" layoutY="130.0" prefHeight="72.0" prefWidth="516.0" />
             <Line endX="394.7070617675781" endY="25.999996185302734" layoutX="171.0" layoutY="119.0" startX="871.3333740234375" startY="26.000015258789062" stroke="#b2b2b2" style="-fx-stroke-dash-array: 5;" />
             <Label layoutX="538.0" layoutY="121.0" text="Événement" />
@@ -204,7 +204,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="1069.0" layoutY="231.0" text="Temps" />
+            <Label layoutX="1069.0" layoutY="231.0" text="Temps (min)" />
             <VBox fx:id="vb_voitures_sortantes" layoutX="543.0" layoutY="290.0" prefHeight="72.0" prefWidth="516.0" />
             <Line endX="394.7070617675781" endY="25.999996185302734" layoutX="171.0" layoutY="279.0" startX="871.3333740234375" startY="26.000015258789062" stroke="#b2b2b2" style="-fx-stroke-dash-array: 5;" />
             <Label layoutX="744.0" layoutY="272.0" style="-fx-background-color: #F4F4F4;" text="Véhicules sortants" textFill="#09557c">
@@ -212,37 +212,37 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="1069.0" layoutY="391.0" text="Temps" />
+            <Label layoutX="1069.0" layoutY="391.0" text="Temps (min)" />
             <Label layoutX="538.0" layoutY="448.0" text="Nb de voitures " />
             <Label layoutX="702.0" layoutY="442.0" style="-fx-background-color: #F4F4F4;" text="Nombre de voitures dans la file" textFill="#09557c">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="1069.0" layoutY="567.0" text="Temps" />
+            <Label layoutX="1069.0" layoutY="567.0" text="Temps (min)" />
             <Label layoutX="534.0" layoutY="282.0" text="Événement" />
             <Line endX="-14.66668701171875" endY="118.22222900390625" layoutX="379.0" layoutY="420.0" startX="-14.66668701171875" startY="1.77777099609375" stroke="#09557c" />
-            <Label fx:id="LB_NbS1" layoutX="381.0" layoutY="414.0" prefHeight="30.0" prefWidth="58.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="#058e49">
+            <Label fx:id="LB_NbS_th" layoutX="381.0" layoutY="414.0" prefHeight="30.0" prefWidth="58.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="#058e49">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="LB_TAS1" layoutX="381.0" layoutY="439.0" prefHeight="30.0" prefWidth="59.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="#058e49">
+            <Label fx:id="LB_TAS_th" layoutX="381.0" layoutY="439.0" prefHeight="30.0" prefWidth="59.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="#058e49">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="LB_TAS2" layoutX="381.0" layoutY="465.0" prefHeight="30.0" prefWidth="59.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="#058e49">
+            <Label fx:id="LB_NbF_th" layoutX="381.0" layoutY="465.0" prefHeight="30.0" prefWidth="59.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="#058e49">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="LB_TAS3" layoutX="381.0" layoutY="491.0" prefHeight="30.0" prefWidth="59.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="#058e49">
+            <Label fx:id="LB_TAF_th" layoutX="381.0" layoutY="491.0" prefHeight="30.0" prefWidth="59.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="#058e49">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="LB_TAS4" layoutX="381.0" layoutY="516.0" prefHeight="30.0" prefWidth="59.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="#058e49">
+            <Label fx:id="LB_NbSI_th" layoutX="381.0" layoutY="516.0" prefHeight="30.0" prefWidth="59.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="#058e49">
                <font>
                   <Font size="14.0" />
                </font>
