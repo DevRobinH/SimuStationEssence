@@ -466,16 +466,16 @@ public class StationController {
 		}
 		
 		// Temps sortantes
-		for(int i=0; i<entree.size(); i++){		
+		for(int i=0; i<sortie.size(); i++){		
 			// On insère une ligne verticale de hauteur 1
-			setVerticalBar(lc_voitures_entrantes, xAxis_entrantes, sortie.get(i), 1.00);
+			setVerticalBar(lc_voitures_sortantes, xAxis_sortantes, sortie.get(i), 1.00);
 		}
 		
 		// Nombre moyen de voitures dans la file
 		series1 = new XYChart.Series();
         lc_voitures_file.getData().add(series1);
         
-		for(int i=0; i<10; i++){
+		for(int i=0; i<nbDansSysteme.size(); i++){
             series1.getData().add(new XYChart.Data(entree.get(i), nbDansSysteme.get(i)));
 		}
 		
