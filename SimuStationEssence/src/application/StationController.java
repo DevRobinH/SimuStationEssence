@@ -1,10 +1,13 @@
 package application;
 
 import javafx.fxml.FXML;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import metier.LineChartWithMarkers;
 
@@ -92,8 +95,15 @@ public class StationController {
 	LineChartWithMarkers<Number, Number> lc_voitures_sortantes = new LineChartWithMarkers<Number, Number>(xAxis_sortantes, yAxis_sortantes);
 	
 	@FXML
-	LineChartWithMarkers<Number, Number> lc_voitures_file = new LineChartWithMarkers<Number, Number>(xAxis_file, yAxis_file);
+	LineChart<Number, Number> lc_voitures_file = new LineChart<Number, Number>(xAxis_file, yAxis_file);
 
+	// Définition des radio boutons
+	@FXML
+	RadioButton bt_Markov = new RadioButton();
+	@FXML
+	RadioButton bt_NonMarkov = new RadioButton();
+			
+			
 	// Appelé au lancement de l'application
 	@FXML
 	private void initialize(){
@@ -154,8 +164,15 @@ public class StationController {
 		yAxis_file.setUpperBound(1);
 		yAxis_file.setLowerBound(0);
 		
-	}
+		// Radio boutons
+		ToggleGroup toggleGroup = new ToggleGroup();
 
+		bt_Markov.setToggleGroup(toggleGroup);
+		bt_NonMarkov.setToggleGroup(toggleGroup);
+
+		// Récupération de la valeur du radio bouton
+		toggleGroup.getSelectedToggle();
+	}
 
 }
 

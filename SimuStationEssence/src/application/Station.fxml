@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -16,6 +18,8 @@
    <top>
       <Pane prefHeight="630.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
          <children>
+            <Rectangle arcHeight="25.0" arcWidth="25.0" disable="true" fill="#ffffff00" height="597.0" layoutX="462.0" layoutY="7.0" stroke="#a6d5ff" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeMiterLimit="1.0" strokeType="INSIDE" width="716.0" />
+            <VBox fx:id="vb_voitures_file" layoutX="542.0" layoutY="461.0" prefHeight="72.0" prefWidth="516.0" />
             <Rectangle arcHeight="25.0" arcWidth="25.0" disable="true" fill="#ffffff00" height="236.0" layoutX="15.0" layoutY="65.0" stroke="#a6d5ff" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeMiterLimit="1.0" strokeType="INSIDE" width="435.0" />
             <Label layoutX="45.0" layoutY="55.0" style="-fx-background-color: #F4F4F4;" text=" Paramètres " textFill="#09557c">
                <font>
@@ -28,7 +32,6 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Rectangle arcHeight="25.0" arcWidth="25.0" disable="true" fill="#ffffff00" height="597.0" layoutX="462.0" layoutY="7.0" stroke="#a6d5ff" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeMiterLimit="1.0" strokeType="INSIDE" width="716.0" />
             <Rectangle arcHeight="25.0" arcWidth="25.0" disable="true" fill="#ffffff00" height="36.0" layoutX="20.0" layoutY="6.0" stroke="#00bbff" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeMiterLimit="1.0" strokeType="INSIDE" width="430.0" />
             <Label layoutX="38.0" layoutY="12.0" text="TP" textFill="#09557c">
                <font>
@@ -45,27 +48,33 @@
                   <Image url="@../../../../GeneAleatoire/GeneAleatoire/src/application/3iLcomplet.png" />
                </image>
             </ImageView>
-            <Label layoutX="78.0" layoutY="105.0" text="Cadence d'arrivée (λ) :" />
-            <Label layoutX="78.0" layoutY="135.0" text="Cadence de traitement (μ) :" />
-            <Label layoutX="78.0" layoutY="166.0" text="Nombre de stations :" />
-            <Label layoutX="78.0" layoutY="196.0" text="Nombre de clients :" />
-            <TextField fx:id="TF_lambda" layoutX="264.0" layoutY="100.0" prefHeight="25.0" prefWidth="63.0" />
-            <TextField fx:id="TF_mu" layoutX="264.0" layoutY="131.0" prefHeight="25.0" prefWidth="63.0" />
-            <TextField fx:id="TF_nbStations" layoutX="264.0" layoutY="162.0" prefHeight="25.0" prefWidth="63.0" />
-            <TextField fx:id="TF_nbClients" layoutX="264.0" layoutY="192.0" prefHeight="25.0" prefWidth="63.0" />
-            <Label layoutX="341.0" layoutY="103.0" text="clients/h " />
-            <Label layoutX="341.0" layoutY="135.0" text="clients/h " />
-            <Label layoutX="342.0" layoutY="166.0" text="stations" />
-            <Label layoutX="342.0" layoutY="197.0" text="clients" />
-            <Button fx:id="BT_simuler" layoutX="118.0" layoutY="253.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: #00cc66;" text="Simuler" textFill="WHITE">
+            <Label layoutX="78.0" layoutY="95.0" text="Cadence d'arrivée (λ) :" />
+            <Label layoutX="78.0" layoutY="125.0" text="Cadence de traitement (μ) :" />
+            <Label layoutX="78.0" layoutY="156.0" text="Nombre de stations :" />
+            <Label layoutX="78.0" layoutY="186.0" text="Nombre de clients :" />
+            <TextField fx:id="TF_lambda" layoutX="264.0" layoutY="90.0" prefHeight="25.0" prefWidth="63.0" />
+            <TextField fx:id="TF_mu" layoutX="264.0" layoutY="121.0" prefHeight="25.0" prefWidth="63.0" />
+            <TextField fx:id="TF_nbStations" layoutX="264.0" layoutY="152.0" prefHeight="25.0" prefWidth="63.0" />
+            <TextField fx:id="TF_nbClients" layoutX="264.0" layoutY="182.0" prefHeight="25.0" prefWidth="63.0" />
+            <Label layoutX="341.0" layoutY="93.0" text="clients/h " />
+            <Label layoutX="341.0" layoutY="125.0" text="clients/h " />
+            <Label layoutX="342.0" layoutY="156.0" text="stations" />
+            <Label layoutX="342.0" layoutY="187.0" text="clients" />
+            <Button fx:id="BT_simuler" layoutX="118.0" layoutY="254.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: #00cc66;" text="Simuler" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
-            <Button fx:id="BT_arreter" layoutX="230.0" layoutY="253.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: #ff0000;" text="Arrêter" textFill="WHITE">
+            <Button fx:id="BT_arreter" layoutX="230.0" layoutY="254.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: #ff0000;" text="Arrêter" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <Label layoutX="165.0" layoutY="347.0" prefHeight="30.0" prefWidth="43.0" style="-fx-background-color: #F4F4F4;" text="Ψ =" textFill="#09557c">
                <font>
@@ -190,66 +199,67 @@
             <VBox fx:id="vb_voitures_entrantes" layoutX="543.0" layoutY="130.0" prefHeight="72.0" prefWidth="516.0" />
             <Line endX="394.7070617675781" endY="25.999996185302734" layoutX="171.0" layoutY="119.0" startX="871.3333740234375" startY="26.000015258789062" stroke="#b2b2b2" style="-fx-stroke-dash-array: 5;" />
             <Label layoutX="538.0" layoutY="121.0" text="Événement" />
-            <Label layoutX="744.0" layoutY="109.0" style="-fx-background-color: #F4F4F4;" text="Véhicules entrants " textFill="#09557c">
+            <Label layoutX="744.0" layoutY="111.0" style="-fx-background-color: #F4F4F4;" text="Véhicules entrants " textFill="#09557c">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="1069.0" layoutY="229.0" text="Temps" />
+            <Label layoutX="1069.0" layoutY="231.0" text="Temps" />
             <VBox fx:id="vb_voitures_sortantes" layoutX="543.0" layoutY="290.0" prefHeight="72.0" prefWidth="516.0" />
             <Line endX="394.7070617675781" endY="25.999996185302734" layoutX="171.0" layoutY="279.0" startX="871.3333740234375" startY="26.000015258789062" stroke="#b2b2b2" style="-fx-stroke-dash-array: 5;" />
-            <Label layoutX="744.0" layoutY="269.0" style="-fx-background-color: #F4F4F4;" text="Véhicules sortants" textFill="#09557c">
+            <Label layoutX="744.0" layoutY="272.0" style="-fx-background-color: #F4F4F4;" text="Véhicules sortants" textFill="#09557c">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="1069.0" layoutY="389.0" text="Temps" />
-            <VBox fx:id="vb_voitures_file" layoutX="543.0" layoutY="457.0" prefHeight="72.0" prefWidth="516.0" />
-            <Line endX="394.7070617675781" endY="25.999996185302734" layoutX="171.0" layoutY="446.0" startX="871.3333740234375" startY="26.000015258789062" stroke="#b2b2b2" style="-fx-stroke-dash-array: 5;" />
+            <Label layoutX="1069.0" layoutY="391.0" text="Temps" />
             <Label layoutX="538.0" layoutY="448.0" text="Nb de voitures " />
-            <Label layoutX="702.0" layoutY="436.0" style="-fx-background-color: #F4F4F4;" text="Nombre de voitures dans la file" textFill="#09557c">
+            <Label layoutX="702.0" layoutY="442.0" style="-fx-background-color: #F4F4F4;" text="Nombre de voitures dans la file" textFill="#09557c">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="1069.0" layoutY="556.0" text="Temps" />
+            <Label layoutX="1069.0" layoutY="567.0" text="Temps" />
             <Label layoutX="534.0" layoutY="282.0" text="Événement" />
             <Line endX="-14.66668701171875" endY="118.22222900390625" layoutX="379.0" layoutY="420.0" startX="-14.66668701171875" startY="1.77777099609375" stroke="#09557c" />
-            <Label fx:id="LB_NbS1" layoutX="380.0" layoutY="414.0" prefHeight="30.0" prefWidth="58.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="RED">
+            <Label fx:id="LB_NbS1" layoutX="381.0" layoutY="414.0" prefHeight="30.0" prefWidth="58.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="#058e49">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="LB_TAS1" layoutX="380.0" layoutY="439.0" prefHeight="30.0" prefWidth="59.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="RED">
+            <Label fx:id="LB_TAS1" layoutX="381.0" layoutY="439.0" prefHeight="30.0" prefWidth="59.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="#058e49">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="LB_TAS2" layoutX="381.0" layoutY="465.0" prefHeight="30.0" prefWidth="59.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="RED">
+            <Label fx:id="LB_TAS2" layoutX="381.0" layoutY="465.0" prefHeight="30.0" prefWidth="59.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="#058e49">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="LB_TAS3" layoutX="381.0" layoutY="491.0" prefHeight="30.0" prefWidth="59.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="RED">
+            <Label fx:id="LB_TAS3" layoutX="381.0" layoutY="491.0" prefHeight="30.0" prefWidth="59.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="#058e49">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="LB_TAS4" layoutX="381.0" layoutY="516.0" prefHeight="30.0" prefWidth="59.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="RED">
+            <Label fx:id="LB_TAS4" layoutX="381.0" layoutY="516.0" prefHeight="30.0" prefWidth="59.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="#058e49">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="319.0" layoutY="386.0" style="-fx-background-color: #F4F4F4;" text="Th" textFill="#09557c">
+            <Label layoutX="391.0" layoutY="386.0" style="-fx-background-color: #F4F4F4;" text="Th" textFill="#09557c">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <Label layoutX="384.0" layoutY="386.0" style="-fx-background-color: #F4F4F4;" text="Obs" textFill="#09557c">
+            <Label layoutX="314.0" layoutY="386.0" style="-fx-background-color: #F4F4F4;" text="Obs" textFill="#09557c">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
+            <Label layoutX="77.0" layoutY="215.0" text="Type de simulation :" />
+            <RadioButton fx:id="bt_Markov" layoutX="227.0" layoutY="217.0" mnemonicParsing="false" text="Markovien" />
+            <RadioButton fx:id="bt_NonMarkov" layoutX="320.0" layoutY="217.0" mnemonicParsing="false" text="Non Markovien" />
          </children>
       </Pane>
    </top>
