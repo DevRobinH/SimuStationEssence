@@ -1,5 +1,8 @@
 package application;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Orientation;
@@ -415,26 +418,65 @@ public class StationController {
 			LB_ergodique.setText("Le système n'est pas Ergodique");
 		}
 		
-		// Insertion des temps d'entree
-		/*for(int i =0; i < uneStation.getFileAttenteClient().size(); i++) {
-			System.out.println(uneStation.getListeTempsEntree().get(i));
-			
-			// On récupère la valeur bouclée
-			double valBouclee = uneStation.getListeTempsEntree().get(i);
-			
-			// On insère une ligne verticale de hauteur 1
-			setVerticalBar(lc_voitures_entrantes, xAxis_entrantes, valBouclee, 1.00);
+		
+		/* Calcul depuis classe métier */
 
-		}*/
+		ArrayList<Double> entree = new ArrayList<>();
+		ArrayList<Double> sortie = new ArrayList<>();
+		ArrayList<Integer> nbDansSysteme = new ArrayList<>();
+		
+		// Instance de la station
+		StationEssence stEss = new StationEssence();
+		
+		// Attribution des valeurs
+		stEss.setLambda(lambda);
+		stEss.setMu(mu);
+		stEss.setNbPompes(nbStations);
+		stEss.setNbClients(nbClients);
+		
+		// Simulation avec Markovien ou non Markovien
+		stEss.simulation(estMarkov);
+		
+		// Affichage des valeurs en console
+		System.out.println("Psi : " + stEss.calculPsi());
+		System.out.println("NbS : " + stEss.calculNbS());
+		System.out.println("NbF : " + stEss.calculNbF());
+		System.out.println("TaS : " + stEss.calculTAS());
+		System.out.println("TaF : " + stEss.calculTaF());
+		
+		// Entrants : conversion hmap en List
+		for (Map.Entry<Double, Integer> releve : stEss.getContenuBuffer().entrySet()) {
+			entree.add(releve.getKey());
+		}
+
+		// Sortants : conversion hmap en List
+		for (int i = 0; i < stEss.getTempsSorties().size(); i++) {
+			sortie.add(stEss.getTempsSorties().get(i));
+		}
+
+		// Nombre de voitures de clients : conversion hmap en List
+		for (Map.Entry<Double, Integer> releve : stEss.getContenuBuffer().entrySet()) {
+			nbDansSysteme.add(releve.getValue());
+		}
+		
+		// Temps entrants
+		for(int i=0; i<entree.size(); i++){		
+			// On insère une ligne verticale de hauteur 1
+			setVerticalBar(lc_voitures_entrantes, xAxis_entrantes, entree.get(i), 1.00);
+		}
+		
+		// Temps sortantes
+		for(int i=0; i<entree.size(); i++){		
+			// On insère une ligne verticale de hauteur 1
+			setVerticalBar(lc_voitures_entrantes, xAxis_entrantes, sortie.get(i), 1.00);
+		}
 		
 		// Nombre moyen de voitures dans la file
 		series1 = new XYChart.Series();
         lc_voitures_file.getData().add(series1);
         
 		for(int i=0; i<10; i++){
-			// Since Java-8
-			
-            series1.getData().add(new XYChart.Data(i, i));
+            series1.getData().add(new XYChart.Data(entree.get(i), nbDansSysteme.get(i)));
 		}
 		
 	}
