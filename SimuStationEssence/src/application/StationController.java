@@ -1,5 +1,6 @@
 package application;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -108,6 +109,13 @@ public class StationController {
 	@FXML
 	private void initialize(){
 		
+		// Vérouillage/dévérouillage des boutons
+		BT_simuler.setDisable(false);
+		BT_arreter.setDisable(true);
+		
+		// On active le bouton Markovien
+		bt_Markov.setSelected(true);
+		
 		// Valeurs par défauts
 		TF_lambda.setText("20");
 		TF_mu.setText("20");
@@ -173,6 +181,146 @@ public class StationController {
 		// Récupération de la valeur du radio bouton
 		toggleGroup.getSelectedToggle();
 	}
+	
+	/**
+	 * Démarre la simulation
+	 * 
+	 * @param Evenement au clic du bouton "Simuler"
+	 */
+	public void actionSimuler(ActionEvent evt){
 
+		System.out.println("\n bt Simuler");
+		
+		// On vérouille le bouton simuler
+		BT_simuler.setDisable(true);
+		
+		// On dévérouille le bouton Arreter
+		BT_arreter.setDisable(false);
+		
+		// On vide le graphe
+		//clearChart();
+		
+		// Récupération des paramètres saisis
+		recupLambda();
+		recupMu();
+		recupNbStations();
+		recupNbClients();
+		recupRadioBt();
+		
+		// Insère les données dans le graphe
+		//insertData();
+	}
+	
+	/**
+	 * Stoppe le programme
+	 * 
+	 * @param Evenement au clic du bouton "Arrêter"
+	 */
+	public void actionArreter(ActionEvent evt){
+
+		System.out.println("\n bt Arrêter");
+		
+		// Vérouillage/dévérouillage des boutons
+		BT_simuler.setDisable(false);
+		BT_arreter.setDisable(true);
+		
+		//clearChart();
+	}
+
+	/**
+	 * Récupère le lambda
+	 */
+	public void recupLambda(){
+
+		// On récupère le champ
+		String recup = TF_lambda.getText();
+
+		// Si le champ à récupérer n'est pas null
+		if (!recup.equals("")){
+
+			System.out.println("\nLambda:");
+			System.out.println(recup);				
+		}
+		else{
+			System.out.println("\nErreur récupération Lambda");
+		}
+	}
+	
+	/**
+	 * Récupère Mu
+	 */
+	public void recupMu(){
+
+		// On récupère le champ
+		String recup = TF_mu.getText();
+
+		// Si le champ à récupérer n'est pas null
+		if (!recup.equals("")){
+
+			System.out.println("\nMu:");
+			System.out.println(recup);				
+		}
+		else{
+			System.out.println("\nErreur récupération Mu");
+		}
+	}
+	
+	/**
+	 * Récupère le nombre de stations
+	 */
+	public void recupNbStations(){
+
+		// On récupère le champ
+		String recup = TF_nbStations.getText();
+
+		// Si le champ à récupérer n'est pas null
+		if (!recup.equals("")){
+
+			System.out.println("\nNb stations:");
+			System.out.println(recup);				
+		}
+		else{
+			System.out.println("\nErreur récupération du nombre de stations");
+		}
+	}
+	
+	/**
+	 * Récupère le nombre de clients
+	 */
+	public void recupNbClients(){
+
+		// On récupère le champ
+		String recup = TF_nbClients.getText();
+
+		// Si le champ à récupérer n'est pas null
+		if (!recup.equals("")){
+
+			System.out.println("\nNb Clients:");
+			System.out.println(recup);				
+		}
+		else{
+			System.out.println("\nErreur récupération du nombre de clients");
+		}
+	}
+	
+	/**
+	 * Récupère le nombre de stations
+	 */
+	public void recupRadioBt(){
+
+		// On récupère le champ
+		String recup = TF_nbStations.getText();
+
+		// Si le champ à récupérer n'est pas null
+		if (!recup.equals("")){
+
+			System.out.println("\nNb Stations:");
+			System.out.println(recup);				
+		}
+		else{
+			System.out.println("\nErreur récupération du nombre de stations");
+		}
+	}
+	
 }
 
