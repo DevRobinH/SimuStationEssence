@@ -100,7 +100,6 @@
             <Label layoutX="90.0" layoutY="444.0" style="-fx-background-color: #F4F4F4;" text="Temps d'attente dans le système       =" textFill="#09557c" />
             <Label layoutX="90.0" layoutY="470.0" style="-fx-background-color: #F4F4F4;" text="Nombre de clients dans la file            =" textFill="#09557c" />
             <Label layoutX="89.0" layoutY="496.0" style="-fx-background-color: #F4F4F4;" text="Temps d'attente dans la file                =" textFill="#09557c" />
-            <Label layoutX="90.0" layoutY="521.0" style="-fx-background-color: #F4F4F4;" text="Nombre de stations inoccupées         =" textFill="#09557c" />
             <Label layoutX="35.0" layoutY="419.0" style="-fx-background-color: #F4F4F4;" text="E(NbS) :" textFill="#09557c">
                <font>
                   <Font name="System Bold" size="12.0" />
@@ -117,11 +116,6 @@
                </font>
             </Label>
             <Label layoutX="35.0" layoutY="495.0" style="-fx-background-color: #F4F4F4;" text="E(TAF) :" textFill="#09557c">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <Label layoutX="34.0" layoutY="520.0" style="-fx-background-color: #F4F4F4;" text="E(NbSI) :" textFill="#09557c">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -146,12 +140,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="LB_NbSI_obs" layoutX="307.0" layoutY="516.0" prefHeight="30.0" prefWidth="55.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="RED">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="LB_ergodique" layoutX="128.0" layoutY="563.0" style="-fx-background-color: #F4F4F4;" text="Le système est Ergodique" textFill="#09557c">
+            <Label fx:id="LB_ergodique" layoutX="128.0" layoutY="552.0" style="-fx-background-color: #F4F4F4;" text="Le système est Ergodique" textFill="#09557c">
                <font>
                   <Font size="17.0" />
                </font>
@@ -221,7 +210,7 @@
             </Label>
             <Label layoutX="1069.0" layoutY="567.0" text="Temps (min)" />
             <Label layoutX="534.0" layoutY="282.0" text="Événement" />
-            <Line endX="-14.66668701171875" endY="118.22222900390625" layoutX="379.0" layoutY="420.0" startX="-14.66668701171875" startY="1.77777099609375" stroke="#09557c" />
+            <Line endX="-14.666656494140625" endY="93.33331298828125" layoutX="379.0" layoutY="420.0" startX="-14.66668701171875" startY="1.77777099609375" stroke="#09557c" />
             <Label fx:id="LB_NbS_th" layoutX="381.0" layoutY="414.0" prefHeight="30.0" prefWidth="58.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="#058e49">
                <font>
                   <Font size="14.0" />
@@ -238,11 +227,6 @@
                </font>
             </Label>
             <Label fx:id="LB_TAF_th" layoutX="381.0" layoutY="491.0" prefHeight="30.0" prefWidth="59.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="#058e49">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="LB_NbSI_th" layoutX="381.0" layoutY="516.0" prefHeight="30.0" prefWidth="59.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="#058e49">
                <font>
                   <Font size="14.0" />
                </font>

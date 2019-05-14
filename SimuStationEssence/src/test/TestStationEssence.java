@@ -42,7 +42,6 @@ public class TestStationEssence {
 		// sortants
 		for (double sortie :stEss.getTempsSorties()) {
 			System.out.println(sortie);
-			//serieSortant.add(sortie, 1);
 		}
 
 		// nb dans buffer
