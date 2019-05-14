@@ -127,7 +127,7 @@ public class StationController {
 	// Appelé au lancement de l'application
 	@FXML
 	private void initialize(){
-		
+        
 		// Vérouillage/dévérouillage des boutons
 		BT_simuler.setDisable(false);
 		BT_arreter.setDisable(true);
@@ -475,8 +475,7 @@ public class StationController {
 		}else {
 			LB_signe.setText(">");
 			LB_ergodique.setText("Le système n'est pas Ergodique");
-		}
-				
+		}				
 	}
 
 	/**
@@ -511,7 +510,7 @@ public class StationController {
 		// Supprime les barres du graphe
 		lc_voitures_entrantes.removeAllVerticalMarker();
 		lc_voitures_sortantes.removeAllVerticalMarker();		
-		lc_voitures_file.getData().removeAll();
+		lc_voitures_file.getData().clear();
 				
 		System.out.println("\nDonnées vidées");
 	}
