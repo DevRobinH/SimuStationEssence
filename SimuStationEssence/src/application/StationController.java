@@ -397,13 +397,13 @@ public class StationController {
 		}*/	
 	
 		// Ajout des valeurs théoriques
-		LB_NbS_th.setText(String.valueOf(uneStation.getNbS()));				
-		LB_TAS_th.setText(String.valueOf(uneStation.getTaS()));		
-		LB_NbF_th.setText(String.valueOf(uneStation.getNbF()));			
-		LB_TAF_th.setText(String.valueOf(uneStation.getTaF()));		
-		LB_NbSI_th.setText(String.valueOf(uneStation.getNbSi()));
+		LB_NbS_th.setText(String.format("%.4f", uneStation.getNbS()));				
+		LB_TAS_th.setText(String.format("%.4f", uneStation.getTaS()));		
+		LB_NbF_th.setText(String.format("%.4f", uneStation.getNbF()));			
+		LB_TAF_th.setText(String.format("%.4f", uneStation.getTaF()));		
+		LB_NbSI_th.setText(String.format("%.4f", uneStation.getNbSi()));
 		
-		LB_psy.setText(String.valueOf(uneStation.getPsi()));
+		LB_psy.setText(String.format("%.4f", uneStation.getPsi()));
 		
 		LB_nbMaxErgo.setText(String.valueOf(nbStations));
 		
