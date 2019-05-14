@@ -391,34 +391,6 @@ public class StationController {
 		// On créer une instance de la classe StationEssence
 		StationEssence uneStation = new StationEssence();
 		
-		//uneStation.chaineMarkovienne(lambda, mu, nbStations, nbClients);
-	
-		// Ajout des valeurs théoriques
-		LB_NbS_th.setText(String.format("%.4f", uneStation.getNbS()));				
-		LB_TAS_th.setText(String.format("%.4f", uneStation.getTaS()));		
-		LB_NbF_th.setText(String.format("%.4f", uneStation.getNbF()));			
-		LB_TAF_th.setText(String.format("%.4f", uneStation.getTaF()));
-		
-		LB_psy.setText(String.format("%.2f", uneStation.getPsi()));
-		
-		LB_nbMaxErgo.setText(String.valueOf(nbStations));
-		
-		// Ajout des valeurs observées
-		LB_NbS_obs.setText(String.format("%.4f", uneStation.getNbS()));				
-		LB_TAS_obs.setText(String.format("%.4f", uneStation.getTaS()));		
-		LB_NbF_obs.setText(String.format("%.4f", uneStation.getNbF()));			
-		LB_TAF_obs.setText(String.format("%.4f", uneStation.getTaF()));
-		
-		// Si psy < nbStations
-		if(uneStation.getPsi() < nbStations){
-			LB_signe.setText("<");
-			LB_ergodique.setText("Le système est Ergodique");
-		}else {
-			LB_signe.setText(">");
-			LB_ergodique.setText("Le système n'est pas Ergodique");
-		}
-		
-		
 		/* Calcul depuis classe métier */
 
 		ArrayList<Double> entree = new ArrayList<>();
@@ -479,6 +451,31 @@ public class StationController {
             series1.getData().add(new XYChart.Data(entree.get(i), nbDansSysteme.get(i)));
 		}
 		
+		// Ajout des valeurs théoriques
+		LB_NbS_th.setText(String.format("%.4f", stEss.calculNbS()));				
+		LB_TAS_th.setText(String.format("%.4f", stEss.calculTAS()));		
+		LB_NbF_th.setText(String.format("%.4f", stEss.calculNbF()));			
+		LB_TAF_th.setText(String.format("%.4f", stEss.calculTaF()));
+		
+		LB_psy.setText(String.format("%.2f", stEss.calculPsi()));
+		
+		LB_nbMaxErgo.setText(String.valueOf(nbStations));
+		
+		// Ajout des valeurs observées
+		LB_NbS_obs.setText(String.format("%.4f", stEss.getMoyenneVoitureSysteme()));				
+		LB_TAS_obs.setText(String.format("%.4f", stEss.getTempsMoyenAttenteSysteme()));		
+		LB_NbF_obs.setText(String.format("%.4f", stEss.getMoyenneVoitureFileAttente()));			
+		LB_TAF_obs.setText(String.format("%.4f", stEss.getTempsMoyenAttenteFile()));
+		
+		// Si psy < nbStations
+		if(stEss.calculPsi() < nbStations){
+			LB_signe.setText("<");
+			LB_ergodique.setText("Le système est Ergodique");
+		}else {
+			LB_signe.setText(">");
+			LB_ergodique.setText("Le système n'est pas Ergodique");
+		}
+				
 	}
 
 	/**

@@ -193,7 +193,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="1069.0" layoutY="231.0" text="Temps (min)" />
+            <Label layoutX="1069.0" layoutY="231.0" text="Temps (h)" />
             <VBox fx:id="vb_voitures_sortantes" layoutX="543.0" layoutY="290.0" prefHeight="72.0" prefWidth="516.0" />
             <Line endX="394.7070617675781" endY="25.999996185302734" layoutX="171.0" layoutY="279.0" startX="871.3333740234375" startY="26.000015258789062" stroke="#b2b2b2" style="-fx-stroke-dash-array: 5;" />
             <Label layoutX="744.0" layoutY="272.0" style="-fx-background-color: #F4F4F4;" text="Véhicules sortants" textFill="#09557c">
@@ -201,14 +201,14 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="1069.0" layoutY="391.0" text="Temps (min)" />
+            <Label layoutX="1069.0" layoutY="391.0" text="Temps (h)" />
             <Label layoutX="538.0" layoutY="448.0" text="Nb de voitures " />
             <Label layoutX="702.0" layoutY="442.0" style="-fx-background-color: #F4F4F4;" text="Nombre de voitures dans la file" textFill="#09557c">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="1069.0" layoutY="567.0" text="Temps (min)" />
+            <Label layoutX="1069.0" layoutY="567.0" text="Temps (h)" />
             <Label layoutX="534.0" layoutY="282.0" text="Événement" />
             <Line endX="-14.666656494140625" endY="93.33331298828125" layoutX="379.0" layoutY="420.0" startX="-14.66668701171875" startY="1.77777099609375" stroke="#09557c" />
             <Label fx:id="LB_NbS_th" layoutX="381.0" layoutY="414.0" prefHeight="30.0" prefWidth="58.0" style="-fx-background-color: #F4F4F4;" text="0.8410" textFill="#058e49">
