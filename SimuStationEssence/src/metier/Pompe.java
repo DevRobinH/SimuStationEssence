@@ -9,15 +9,15 @@ package metier;
  * @version 1.0
  */
 public class Pompe {
-    /** Numéro de pompe*/
+	/** Numéro de pompe*/
 	private int numero;
-	
+
 	/** Client qui utilise la pompe à essence */
 	private Voiture client;
-	
+
 	/** Temps service à la pompe */
 	private double tempsService;
-	
+
 	/** heure à laquelle commence le service à la pompe */
 	private double heureDebutService;
 
@@ -26,6 +26,13 @@ public class Pompe {
 	 */
 	public Pompe() {
 		this.numero = 0;
+		this.client = null;
+		this.tempsService = 0;
+		this.heureDebutService = 0;
+	}
+
+	public Pompe(int numero) {
+		this.numero = numero;
 		this.client = null;
 		this.tempsService = 0;
 		this.heureDebutService = 0;
@@ -45,14 +52,15 @@ public class Pompe {
 		this.tempsService = tempsService;
 		this.heureDebutService = heureDebutService;
 	}
-	
+
 	/**
 	 * Modification de la pompe après passage client
 	 */
 	public void reinitialiser() {
+		this.tempsService = 0;
 		this.heureDebutService = 0;
 		this.client = null;
-		
+
 	}
 	/**
 	 * Vérification qu'il n'y est personne à la pome à essence 
@@ -61,8 +69,10 @@ public class Pompe {
 	public boolean nonUtilise() {
 		return this.client == null;
 	}
-	
-	
+
+	public boolean isFinish(double temps) {
+		return heureDebutService + this.tempsService < temps;
+	}
 	/**
 	 * @return the client
 	 */
@@ -118,6 +128,6 @@ public class Pompe {
 	public void setNumero(int numero) {
 		this.numero = numero;
 	}
-	
-	
+
+
 }

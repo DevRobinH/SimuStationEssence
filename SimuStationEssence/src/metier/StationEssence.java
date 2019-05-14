@@ -4,8 +4,8 @@
 package metier;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
-import java.util.Queue;
 
 /**
  * Gestionnaire d'une station essence
@@ -13,73 +13,166 @@ import java.util.Queue;
  * @version 1.0
  */
 public class StationEssence {
-	/** cadence d'arrivée des voitures (clients) à la station essence */
+
+	/** Cadence d'arrivée */
 	private double lambda;
 
-	/** cadence de traitement */
+	/** Cadence de traitement */
 	private double mu;
 
-	/** nombre de pompes de la station */
-	private int nbPompes;
-
-	/** nombre de client arrivant à la station */
+	/** Nombre de clients du sytème */
 	private int nbClients;
 
-	/** file d'attente de client */
-	private LinkedList<Voiture> fileAttenteClient;
+	/** nombre de pompe */
+	private int nbPompes;
 
-	/** liste stockant les temps de sortie des clients*/
-	private ArrayList<Double> listeTempsSortie;
+	/** Liste des clients */
+	private LinkedList<Voiture> voitures;
 
-	/** liste stockant les temps d'entrée des clients*/
-	private ArrayList<Double> listeTempsEntree;
+	/** File d'attente des clients */
+	private LinkedList<Voiture> buffer;
 
-	/** Liste du tems d'attnte de chaque client avant d'arrivé à la pompe */
-	private ArrayList<Double> listeTempsAttenteClients;
+	/**Liste des pompes */
+	private ArrayList<Pompe> pompes;
 
-	/** nombre moyen de clients dans le système */
+	/** Liste des temps de sortie du système */
+	private LinkedList<Double> tempsSorties;
+
+	/** Contenu de la file */
+	private LinkedHashMap<Double, Integer> contenuBuffer;
+
+	/** Nombre de personne max dans la file */
+	private int nbPersonneMax = 0;
+
+	/** NbS observé */
+	private double moyenneVoitureSysteme = 0;
+
+	/** NbF observé */
+	private double moyenneVoitureFileAttente = 0;
+
+	/** TaS observé */
+	private double tempsMoyenAttenteSysteme = 0;
+
+	/** TaF observé */
+	private double tempsMoyenAttenteFile = 0;
+
+	/** nombre moyen de clients dans le système théorique */
 	private double nbS;
 
-	/** moyenne temps attente dans le système */
+	/** moyenne temps attente dans le système théorique */
 	private double taS;
 
-	/** moyenne nombre clients dans la file */
+	/** moyenne nombre clients dans la file théorique */
 	private double nbF;
 
-	/** moyenne temps attente dans la file */
+	/** moyenne temps attente dans la file théorique */
 	private double taF;
-
-	/** nombre pompes innocupées, fraction d'inactivité */
-	private double nbSi;
 
 	/** Facteur de charge */
 	private double psi;
 
-	/**
-	 * Initialisation d'une station essence sans paramètre
-	 */
-	public StationEssence() {
-		super();
-		this.nbPompes = 0;
-		this.nbClients = 0;
-		this.fileAttenteClient = new LinkedList<>();
-		this.listeTempsSortie = new ArrayList<>();
-		this.listeTempsEntree = new ArrayList<>();
-		this.listeTempsAttenteClients = new ArrayList<>();
-		this.nbS = 0.0;
-		this.taS = 0.0;
-		this.nbF = 0.0;
-		this.nbSi = 0.0;
-		this.taF = 0.0;
-		this.psi = 0.0;
+	public static long compteurTemps = 0;
+
+
+	/** Initialisation d'une station essence */
+	private void initialize() {
+		pompes = new ArrayList<Pompe>();
+		buffer = new LinkedList<Voiture>();
+		voitures = new LinkedList<Voiture>();
+		tempsSorties = new LinkedList<Double>();
+		contenuBuffer = new LinkedHashMap<Double, Integer>();
+		moyenneVoitureSysteme = 0;
+		moyenneVoitureFileAttente = 0;
+		tempsMoyenAttenteSysteme = 0;
+		tempsMoyenAttenteFile = 0;
+		compteurTemps = 0;
+		nbPersonneMax = 0;
+		psi = 0;
 	}
+
+
+	/**
+	 * Simulation du système station essence
+	 * @param markov, true simulation en mode markovien, false sinon
+	 */
+	public void simulation(boolean markov) {
+		initialize();        
+        this.psi = calculPsi();
+		// Tirage des Voitures
+		double temps = 0;
+		for (int i = 0; i < nbClients; i++) {
+			temps += markov ? GenerationLois.loiExponentielle(lambda) : Math.abs(GenerationLois.loiNormale(1.0/lambda,1.0/lambda));
+			voitures.add(new Voiture(temps));
+		}
+
+		for (int i = 0; i < nbPompes; i++) {
+			pompes.add(new Pompe(i));
+		}
+
+		temps = 0;
+		while (voitures.size() > 0) {
+			int nbClientsysteme = 0;
+
+			// Pour chacune des Pompes
+			for (int i = 0; i < pompes.size(); i++) {
+				Pompe Pompe = pompes.get(i);
+				if (Pompe.nonUtilise() && !buffer.isEmpty()) {
+					// On va chercher un Voiture
+					Pompe.setClient(buffer.removeFirst());
+					Pompe.setHeureDebutService(temps);
+					Pompe.setTempsService(markov ? GenerationLois.loiExponentielle(mu) : GenerationLois.loiExponentielle(mu));
+					tempsMoyenAttenteFile += temps - Pompe.getClient().getHeureArrivee();
+				} else if (!Pompe.nonUtilise() && Pompe.isFinish(temps)) {
+					// Le Voiture a été traité
+					tempsSorties.add(temps);
+					tempsMoyenAttenteSysteme += temps - Pompe.getClient().getHeureArrivee();
+					Pompe.reinitialiser();
+					i--;
+				}
+			}
+
+			for (Pompe Pompe : pompes) {
+				if (!Pompe.nonUtilise()) {
+					nbClientsysteme++;
+				}
+			}
+
+			// On regarde les Voitures arrivants
+			while (voitures.size() > 0 &&
+					temps >= voitures.getFirst().getHeureArrivee()) {
+				buffer.add(voitures.removeFirst());
+				contenuBuffer.put(temps, buffer.size());
+				nbPersonneMax = buffer.size() > nbPersonneMax ? 
+						buffer.size() : nbPersonneMax;
+			}
+
+			nbClientsysteme += buffer.size();
+
+			moyenneVoitureFileAttente += buffer.size();
+			moyenneVoitureSysteme += nbClientsysteme;
+			compteurTemps++;
+			temps += 0.00001;
+		}
+
+
+		moyenneVoitureFileAttente /= compteurTemps;
+		moyenneVoitureSysteme /= compteurTemps;
+		tempsMoyenAttenteFile /= nbClients;
+		tempsMoyenAttenteSysteme /= nbClients;
+		System.out.println("Moyenne de Voitures dans la file d'attente : " + moyenneVoitureFileAttente);
+		System.out.println("Moyenne de Voitures dans le système : " + moyenneVoitureSysteme);
+		System.out.println("Temps moyen dans la file d'attente : " + tempsMoyenAttenteFile);
+		System.out.println("Temps moyen dans le système : " + tempsMoyenAttenteSysteme);
+		temps = 0;
+	}
+
 	/**
 	 * Calcul du facteur de charge
 	 * @param lambda  cadence d'arrivées
 	 * @param mu  cadence de traitement
 	 * @return psi le facteur de charge
 	 */
-	public double calculPsi(double lambda, double mu) {
+	public double calculPsi() {
 		return lambda/mu;
 	}
 
@@ -90,14 +183,45 @@ public class StationEssence {
 	public boolean estErgodique() {
 		return this.psi < nbPompes;
 	}
+	/**
+	 * Determination de la factorielle d'un nombre
+	 * @param nombre
+	 * @return
+	 */
+	public double factorielle(double nombre) {
+		int fac = 1;
+		for (double i = nombre; i > 1; i--) {
+			fac *= i;
+		}
+		return fac;
+	}
+	/**
+	 * Calcul du po*
+	 * @return po*
+	 */
+	public double po() {
+		double valueBas = 0;
+		for (double i = 0; i <= nbPompes - 1; i++) {
+			valueBas += (Math.pow(psi, i) / factorielle(i));
+		}
+		return 1 / (valueBas + (Math.pow(psi, nbPompes))
+				/ (factorielle(nbPompes) * (1 - psi / nbPompes)));
+	}
 
 	/**
 	 * Calcul de E(NbS), v.a nombre de clients dans le système
 	 * @param psi le facteur de charge
 	 * @return nbS
 	 */
-	public double calculNbS(double psi) {
-		return psi/(1 - psi);
+	public double calculNbS() {
+		// MM1
+		if(nbPompes == 1) {
+			return psi/(1 - psi);
+			// MMS
+		} else {
+			return psi + (nbPompes / Math.pow(nbPompes - psi, 2))
+					* ((Math.pow(psi, nbPompes + 1)) / factorielle(nbPompes)) * po();
+		}
 	}
 
 	/**
@@ -106,8 +230,14 @@ public class StationEssence {
 	 * @param mu cadence de traitement
 	 * @return taS
 	 */
-	public double calculTAS(double lambda, double mu) {
-		return 1 / (mu - lambda);
+	public double calculTAS() {
+		// MM1
+		if(nbPompes == 1) {
+			return 1 / (mu - lambda);
+			// MMS
+		} else {
+			return calculNbS() / lambda;
+		}
 	}
 
 	/**
@@ -115,8 +245,15 @@ public class StationEssence {
 	 * @param psi facteur de charge
 	 * @return nbF
 	 */
-	public double calculNbF(double psi) {
-		return Math.pow(psi,2) / (1 - psi);
+	public double calculNbF() {
+		// MM1
+		if (nbPompes == 1) {
+			return Math.pow(psi,2) / (1 - psi);
+			// MM2
+		} else {
+			return (nbPompes / Math.pow(nbPompes - psi, 2))
+					* ((Math.pow(psi, nbPompes + 1)) / factorielle(nbPompes)) * po();
+		}
 	}
 
 	/**
@@ -125,8 +262,14 @@ public class StationEssence {
 	 * @param psi facteur de charge
 	 * @return taF
 	 */
-	public double calculTaF(double mu, double psi) {
-		return psi/(mu * (1 - psi));
+	public double calculTaF() {
+		// MM1
+		if (nbPompes == 1) {
+			return psi/(mu * (1 - psi));
+			// MMS
+		} else {
+			return calculNbF() / lambda;
+		}
 	}
 
 	/**
@@ -136,87 +279,6 @@ public class StationEssence {
 	 */
 	public double calculNbSI(double psi) {
 		return 1 - psi;
-	}
-
-	/**
-	 * Simulation en mode markovien
-	 * @param lambda Cadence d'arrivée du phénomène
-	 * @param mu Cadence de traitement du système
-	 * @param nbStation nombre de pompe du système
-	 * @param nbClient nombre de personne venant se ravitailler en essence
-	 */
-	public void chaineMarkovienne(double lambda, double mu, int nbStation, int nbClient) {
-		setNbPompes(nbStation);
-		if (nbStation == 1) {
-			mm1(lambda, mu, nbClient);
-		} else {
-			mms(lambda, mu, nbStation, nbClient);
-		}
-	}
-
-	/**
-	 * Simulation en mode markovien en mode mm1
-	 * @param lambda Cadence d'arrivée du phénomène
-	 * @param mu Cadence de traitement du système
-	 * @param nbClient nombre de personne venant se ravitailler en essence
-	 */
-	private void mm1 (double lambda, double mu, int nbClient) {
-		// Définition des paramètres
-		this.lambda = lambda;
-		this.mu = mu;
-		this.nbClients = nbClient;
-
-		// Calcul de psi 
-		this.psi = calculPsi(lambda, mu);
-
-		// file d'attente
-		this.fileAttenteClient = new LinkedList<>();
-		// Génération des clients de la station
-		for (int i = 0; i < nbClient; i ++) {
-			if (i == 0) {
-				this.fileAttenteClient.add(new Voiture(GenerationLois.loiExponentielle(lambda)));
-				// Ajout du temps d'arrivé à la liste des temps d'arrivés
-				this.listeTempsEntree.add(this.fileAttenteClient.get(i).getHeureArrivee());
-			} else {
-				this.fileAttenteClient.add(new Voiture(GenerationLois.loiExponentielle(lambda)+fileAttenteClient.get(i-1).getHeureArrivee()));
-				// Ajout du temps d'arrivé à la liste des temps d'arrivés
-				this.listeTempsEntree.add(this.fileAttenteClient.get(i).getHeureArrivee());
-			}
-		}
-		// Création de la pompe à essence
-		Pompe pompeEss = new Pompe();
-		pompeEss.setNumero(nbPompes);
-		// Passage de chaque client à la pompe 
-		for(int i = 0; i < this.fileAttenteClient.size(); i++ ) {
-		    // Cas du premier client
-			if (i == 0 ) {
-				pompeEss.setClient(this.fileAttenteClient.get(i));
-				pompeEss.setTempsService(GenerationLois.loiNormale(3, 1));
-				pompeEss.setHeureDebutService(listeTempsEntree.get(i));
-				this.listeTempsSortie.add(pompeEss.getTempsService() + pompeEss.getHeureDebutService());
-			// Cas des autres client de la file
-			} else {
-				pompeEss.setClient(this.fileAttenteClient.get(i));
-				pompeEss.setTempsService(GenerationLois.loiNormale(3, 1));
-				pompeEss.setHeureDebutService(listeTempsSortie.get(i-1));
-				this.listeTempsSortie.add(pompeEss.getTempsService() + pompeEss.getHeureDebutService());
-			}
-		}
-		
-		// Calcul du temps que passe chaque clients dans le système
-		for(int i = 0; i < this.fileAttenteClient.size(); i++) {
-		   this.listeTempsAttenteClients.add(listeTempsSortie.get(i) - listeTempsEntree.get(i));	
-		}
-		//Calcul des moyennes
-		this.setNbS(calculNbS(psi));
-		this.setNbF(calculNbF(this.psi));
-		this.setTaF(calculTaF(mu, this.psi));
-		this.setTaS(calculTAS(lambda, mu));
-
-	}
-
-	private void mms(double lambda2, double mu2, int nbStation, int nbClient) {
-
 	}
 
 
@@ -276,47 +338,166 @@ public class StationEssence {
 		this.nbClients = nbClients;
 	}
 
-	/**
-	 * @return the fileAttenteClient
-	 */
-	public LinkedList<Voiture> getFileAttenteClient() {
-		return fileAttenteClient;
-	}
 
 	/**
-	 * @param fileAttenteClient the fileAttenteClient to set
+	 * @return the voitures
 	 */
-	public void setFileAttenteClient(LinkedList<Voiture> fileAttenteClient) {
-		this.fileAttenteClient = fileAttenteClient;
+	public LinkedList<Voiture> getVoitures() {
+		return voitures;
 	}
 
-	/**
-	 * @return the listeTempsSortie
-	 */
-	public ArrayList<Double> getListeTempsSortie() {
-		return listeTempsSortie;
-	}
 
 	/**
-	 * @param listeTempsSortie the listeTempsSortie to set
+	 * @param voitures the voitures to set
 	 */
-	public void setListeTempsSortie(ArrayList<Double> listeTempsSortie) {
-		this.listeTempsSortie = listeTempsSortie;
+	public void setVoitures(LinkedList<Voiture> voitures) {
+		this.voitures = voitures;
 	}
 
-	/**
-	 * @return the listeTempsEntree
-	 */
-	public ArrayList<Double> getListeTempsEntree() {
-		return listeTempsEntree;
-	}
 
 	/**
-	 * @param listeTempsEntree the listeTempsEntree to set
+	 * @return the buffer
 	 */
-	public void setListeTempsEntree(ArrayList<Double> listeTempsEntree) {
-		this.listeTempsEntree = listeTempsEntree;
+	public LinkedList<Voiture> getBuffer() {
+		return buffer;
 	}
+
+
+	/**
+	 * @param buffer the buffer to set
+	 */
+	public void setBuffer(LinkedList<Voiture> buffer) {
+		this.buffer = buffer;
+	}
+
+
+	/**
+	 * @return the pompes
+	 */
+	public ArrayList<Pompe> getPompes() {
+		return pompes;
+	}
+
+
+	/**
+	 * @param pompes the pompes to set
+	 */
+	public void setPompes(ArrayList<Pompe> pompes) {
+		this.pompes = pompes;
+	}
+
+
+	/**
+	 * @return the tempsSorties
+	 */
+	public LinkedList<Double> getTempsSorties() {
+		return tempsSorties;
+	}
+
+
+	/**
+	 * @param tempsSorties the tempsSorties to set
+	 */
+	public void setTempsSorties(LinkedList<Double> tempsSorties) {
+		this.tempsSorties = tempsSorties;
+	}
+
+
+	/**
+	 * @return the contenuBuffer
+	 */
+	public LinkedHashMap<Double, Integer> getContenuBuffer() {
+		return contenuBuffer;
+	}
+
+
+	/**
+	 * @param contenuBuffer the contenuBuffer to set
+	 */
+	public void setContenuBuffer(LinkedHashMap<Double, Integer> contenuBuffer) {
+		this.contenuBuffer = contenuBuffer;
+	}
+
+
+	/**
+	 * @return the nbPersonneMax
+	 */
+	public int getNbPersonneMax() {
+		return nbPersonneMax;
+	}
+
+
+	/**
+	 * @param nbPersonneMax the nbPersonneMax to set
+	 */
+	public void setNbPersonneMax(int nbPersonneMax) {
+		this.nbPersonneMax = nbPersonneMax;
+	}
+
+
+	/**
+	 * @return the moyenneVoitureSysteme
+	 */
+	public double getMoyenneVoitureSysteme() {
+		return moyenneVoitureSysteme;
+	}
+
+
+	/**
+	 * @param moyenneVoitureSysteme the moyenneVoitureSysteme to set
+	 */
+	public void setMoyenneVoitureSysteme(double moyenneVoitureSysteme) {
+		this.moyenneVoitureSysteme = moyenneVoitureSysteme;
+	}
+
+
+	/**
+	 * @return the moyenneVoitureFileAttente
+	 */
+	public double getMoyenneVoitureFileAttente() {
+		return moyenneVoitureFileAttente;
+	}
+
+
+	/**
+	 * @param moyenneVoitureFileAttente the moyenneVoitureFileAttente to set
+	 */
+	public void setMoyenneVoitureFileAttente(double moyenneVoitureFileAttente) {
+		this.moyenneVoitureFileAttente = moyenneVoitureFileAttente;
+	}
+
+
+	/**
+	 * @return the tempsMoyenAttenteSysteme
+	 */
+	public double getTempsMoyenAttenteSysteme() {
+		return tempsMoyenAttenteSysteme;
+	}
+
+
+	/**
+	 * @param tempsMoyenAttenteSysteme the tempsMoyenAttenteSysteme to set
+	 */
+	public void setTempsMoyenAttenteSysteme(double tempsMoyenAttenteSysteme) {
+		this.tempsMoyenAttenteSysteme = tempsMoyenAttenteSysteme;
+	}
+
+
+	/**
+	 * @return the tempsMoyenAttenteFile
+	 */
+	public double getTempsMoyenAttenteFile() {
+		return tempsMoyenAttenteFile;
+	}
+
+
+	/**
+	 * @param tempsMoyenAttenteFile the tempsMoyenAttenteFile to set
+	 */
+	public void setTempsMoyenAttenteFile(double tempsMoyenAttenteFile) {
+		this.tempsMoyenAttenteFile = tempsMoyenAttenteFile;
+	}
+
 
 	/**
 	 * @return the nbS
@@ -325,12 +506,14 @@ public class StationEssence {
 		return nbS;
 	}
 
+
 	/**
 	 * @param nbS the nbS to set
 	 */
 	public void setNbS(double nbS) {
 		this.nbS = nbS;
 	}
+
 
 	/**
 	 * @return the taS
@@ -339,12 +522,14 @@ public class StationEssence {
 		return taS;
 	}
 
+
 	/**
 	 * @param taS the taS to set
 	 */
 	public void setTaS(double taS) {
 		this.taS = taS;
 	}
+
 
 	/**
 	 * @return the nbF
@@ -353,12 +538,14 @@ public class StationEssence {
 		return nbF;
 	}
 
+
 	/**
 	 * @param nbF the nbF to set
 	 */
 	public void setNbF(double nbF) {
 		this.nbF = nbF;
 	}
+
 
 	/**
 	 * @return the taF
@@ -367,6 +554,7 @@ public class StationEssence {
 		return taF;
 	}
 
+
 	/**
 	 * @param taF the taF to set
 	 */
@@ -374,19 +562,22 @@ public class StationEssence {
 		this.taF = taF;
 	}
 
-	/**
-	 * @return the nbSi
-	 */
-	public double getNbSi() {
-		return nbSi;
-	}
 
 	/**
-	 * @param nbSi the nbSi to set
+	 * @return the compteurTemps
 	 */
-	public void setNbSi(double nbSi) {
-		this.nbSi = nbSi;
+	public static long getCompteurTemps() {
+		return compteurTemps;
 	}
+
+
+	/**
+	 * @param compteurTemps the compteurTemps to set
+	 */
+	public static void setCompteurTemps(long compteurTemps) {
+		StationEssence.compteurTemps = compteurTemps;
+	}
+
 
 	/**
 	 * @return the psi
@@ -395,26 +586,11 @@ public class StationEssence {
 		return psi;
 	}
 
+
 	/**
 	 * @param psi the psi to set
 	 */
 	public void setPsi(double psi) {
 		this.psi = psi;
 	}
-	/**
-	 * @return the listeTempsAttenteClients
-	 */
-	public ArrayList<Double> getListeTempsAttenteClients() {
-		return listeTempsAttenteClients;
-	}
-	/**
-	 * @param listeTempsAttenteClients the listeTempsAttenteClients to set
-	 */
-	public void setListeTempsAttenteClients(ArrayList<Double> listeTempsAttenteClients) {
-		this.listeTempsAttenteClients = listeTempsAttenteClients;
-	}
-
-
-
-
 }
