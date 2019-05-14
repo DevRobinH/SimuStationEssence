@@ -20,7 +20,7 @@ public class StationEssence {
 	private double mu;
 
 	/** nombre de pompes de la station */
-	private double nbPompes;
+	private int nbPompes;
 
 	/** nombre de client arrivant à la station */
 	private int nbClients;
@@ -146,6 +146,7 @@ public class StationEssence {
 	 * @param nbClient nombre de personne venant se ravitailler en essence
 	 */
 	public void chaineMarkovienne(double lambda, double mu, int nbStation, int nbClient) {
+		setNbPompes(nbStation);
 		if (nbStation == 1) {
 			mm1(lambda, mu, nbClient);
 		} else {
@@ -182,9 +183,30 @@ public class StationEssence {
 				this.listeTempsEntree.add(this.fileAttenteClient.get(i).getHeureArrivee());
 			}
 		}
-		// génération de la station essence
+		// Création de la pompe à essence
 		Pompe pompeEss = new Pompe();
-
+		pompeEss.setNumero(nbPompes);
+		// Passage de chaque client à la pompe 
+		for(int i = 0; i < this.fileAttenteClient.size(); i++ ) {
+		    // Cas du premier client
+			if (i == 0 ) {
+				pompeEss.setClient(this.fileAttenteClient.get(i));
+				pompeEss.setTempsService(GenerationLois.loiNormale(3, 1));
+				pompeEss.setHeureDebutService(listeTempsEntree.get(i));
+				this.listeTempsSortie.add(pompeEss.getTempsService() + pompeEss.getHeureDebutService());
+			// Cas des autres client de la file
+			} else {
+				pompeEss.setClient(this.fileAttenteClient.get(i));
+				pompeEss.setTempsService(GenerationLois.loiNormale(3, 1));
+				pompeEss.setHeureDebutService(listeTempsSortie.get(i-1));
+				this.listeTempsSortie.add(pompeEss.getTempsService() + pompeEss.getHeureDebutService());
+			}
+		}
+		
+		// Calcul du temps que passe chaque clients dans le système
+		for(int i = 0; i < this.fileAttenteClient.size(); i++) {
+		   this.listeTempsAttenteClients.add(listeTempsSortie.get(i) - listeTempsEntree.get(i));	
+		}
 		//Calcul des moyennes
 		this.setNbS(calculNbS(psi));
 		this.setNbF(calculNbF(this.psi));
@@ -378,6 +400,18 @@ public class StationEssence {
 	 */
 	public void setPsi(double psi) {
 		this.psi = psi;
+	}
+	/**
+	 * @return the listeTempsAttenteClients
+	 */
+	public ArrayList<Double> getListeTempsAttenteClients() {
+		return listeTempsAttenteClients;
+	}
+	/**
+	 * @param listeTempsAttenteClients the listeTempsAttenteClients to set
+	 */
+	public void setListeTempsAttenteClients(ArrayList<Double> listeTempsAttenteClients) {
+		this.listeTempsAttenteClients = listeTempsAttenteClients;
 	}
 
 

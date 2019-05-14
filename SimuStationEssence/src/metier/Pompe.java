@@ -27,7 +27,7 @@ public class Pompe {
 	public Pompe() {
 		this.numero = 0;
 		this.client = null;
-		this.tempsService = 3;
+		this.tempsService = 0;
 		this.heureDebutService = 0;
 	}
 
@@ -103,6 +103,20 @@ public class Pompe {
 	 */
 	public void setHeureDebutService(double heureDebutService) {
 		this.heureDebutService = heureDebutService;
+	}
+
+	/**
+	 * @return the numero
+	 */
+	public int getNumero() {
+		return numero;
+	}
+
+	/**
+	 * @param numero the numero to set
+	 */
+	public void setNumero(int numero) {
+		this.numero = numero;
 	}
 	
 	

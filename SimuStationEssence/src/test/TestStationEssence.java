@@ -3,6 +3,7 @@
  */
 package test;
 
+import metier.GenerationLois;
 import metier.StationEssence;
 
 /**
@@ -21,11 +22,20 @@ public class TestStationEssence {
 		for(int i =0; i < stEss.getFileAttenteClient().size(); i++) {
 			System.out.println(stEss.getListeTempsEntree().get(i));
 		}
+		System.out.println("#####################################");
+		for(int i =0; i < stEss.getFileAttenteClient().size(); i++) {
+			System.out.println(stEss.getListeTempsSortie().get(i));
+		}
+		System.out.println("#####################################");
+		for(int i =0; i < stEss.getFileAttenteClient().size(); i++) {
+			System.out.println(stEss.getListeTempsAttenteClients().get(i));
+		}
 		System.out.println("Psi : " + stEss.getPsi());
 		System.out.println("NbS : " + stEss.getNbS());
 		System.out.println("NbF : " + stEss.getNbF());
 		System.out.println("TaS : " + stEss.getTaS());
 		System.out.println("TaF : " + stEss.getTaF());
+		
 	}
 	
 }
