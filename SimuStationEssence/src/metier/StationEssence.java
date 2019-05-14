@@ -13,42 +13,45 @@ import java.util.Queue;
  * @version 1.0
  */
 public class StationEssence {
-    /** cadence d'arrivée des voitures (clients) à la station essence */
+	/** cadence d'arrivée des voitures (clients) à la station essence */
 	private double lambda;
-	
+
 	/** cadence de traitement */
 	private double mu;
-	
+
 	/** nombre de pompes de la station */
 	private double nbPompes;
-	
+
 	/** nombre de client arrivant à la station */
 	private int nbClients;
-	
+
 	/** file d'attente de client */
 	private LinkedList<Voiture> fileAttenteClient;
-	
+
 	/** liste stockant les temps de sortie des clients*/
 	private ArrayList<Double> listeTempsSortie;
-	
+
 	/** liste stockant les temps d'entrée des clients*/
 	private ArrayList<Double> listeTempsEntree;
-	
+
+	/** Liste du tems d'attnte de chaque client avant d'arrivé à la pompe */
+	private ArrayList<Double> listeTempsAttenteClients;
+
 	/** nombre moyen de clients dans le système */
 	private double nbS;
-	
+
 	/** moyenne temps attente dans le système */
 	private double taS;
-	
+
 	/** moyenne nombre clients dans la file */
 	private double nbF;
-	
+
 	/** moyenne temps attente dans la file */
 	private double taF;
-	
+
 	/** nombre pompes innocupées, fraction d'inactivité */
 	private double nbSi;
-	
+
 	/** Facteur de charge */
 	private double psi;
 
@@ -62,6 +65,7 @@ public class StationEssence {
 		this.fileAttenteClient = new LinkedList<>();
 		this.listeTempsSortie = new ArrayList<>();
 		this.listeTempsEntree = new ArrayList<>();
+		this.listeTempsAttenteClients = new ArrayList<>();
 		this.nbS = 0.0;
 		this.taS = 0.0;
 		this.nbF = 0.0;
@@ -69,16 +73,16 @@ public class StationEssence {
 		this.taF = 0.0;
 		this.psi = 0.0;
 	}
-    /**
-     * Calcul du facteur de charge
-     * @param lambda  cadence d'arrivées
-     * @param mu  cadence de traitement
-     * @return psi le facteur de charge
-     */
+	/**
+	 * Calcul du facteur de charge
+	 * @param lambda  cadence d'arrivées
+	 * @param mu  cadence de traitement
+	 * @return psi le facteur de charge
+	 */
 	public double calculPsi(double lambda, double mu) {
 		return lambda/mu;
 	}
-	
+
 	/**
 	 * Permet de savoir si le système est ergodique
 	 * @return true si psi au nombre de station, false sinon
@@ -86,7 +90,7 @@ public class StationEssence {
 	public boolean estErgodique() {
 		return this.psi < nbPompes;
 	}
-	
+
 	/**
 	 * Calcul de E(NbS), v.a nombre de clients dans le système
 	 * @param psi le facteur de charge
@@ -95,7 +99,7 @@ public class StationEssence {
 	public double calculNbS(double psi) {
 		return psi/(1 - psi);
 	}
-	
+
 	/**
 	 * Calcul de E(TAS), v.a nombre de clients dans la file
 	 * @param lambda cadence d'arrivées
@@ -105,7 +109,7 @@ public class StationEssence {
 	public double calculTAS(double lambda, double mu) {
 		return 1 / (mu - lambda);
 	}
-	
+
 	/**
 	 * Calcul de E(NbF), v.a nombre de client dans la file
 	 * @param psi facteur de charge
@@ -114,7 +118,7 @@ public class StationEssence {
 	public double calculNbF(double psi) {
 		return Math.pow(psi,2) / (1 - psi);
 	}
-	
+
 	/**
 	 * Calcul de E(TAF), v.a temps d'attente dasn la file
 	 * @param mu cadence de traitement
@@ -124,7 +128,7 @@ public class StationEssence {
 	public double calculTaF(double mu, double psi) {
 		return psi/(mu * (1 - psi));
 	}
-	
+
 	/**
 	 * calcul de E(NbSI), v.a nombre de station inoccupées
 	 * @param psi facteur de charge
@@ -133,7 +137,7 @@ public class StationEssence {
 	public double calculNbSI(double psi) {
 		return 1 - psi;
 	}
-	
+
 	/**
 	 * Simulation en mode markovien
 	 * @param lambda Cadence d'arrivée du phénomène
@@ -148,11 +152,7 @@ public class StationEssence {
 			mms(lambda, mu, nbStation, nbClient);
 		}
 	}
-	
-	private void mms(double lambda2, double mu2, int nbStation, int nbClient) {
-		
-	}
-	
+
 	/**
 	 * Simulation en mode markovien en mode mm1
 	 * @param lambda Cadence d'arrivée du phénomène
@@ -164,31 +164,40 @@ public class StationEssence {
 		this.lambda = lambda;
 		this.mu = mu;
 		this.nbClients = nbClient;
-		
+
 		// Calcul de psi 
 		this.psi = calculPsi(lambda, mu);
-		
+
 		// file d'attente
 		this.fileAttenteClient = new LinkedList<>();
 		// Génération des clients de la station
 		for (int i = 0; i < nbClient; i ++) {
 			if (i == 0) {
 				this.fileAttenteClient.add(new Voiture(GenerationLois.loiExponentielle(lambda)));
+				// Ajout du temps d'arrivé à la liste des temps d'arrivés
+				this.listeTempsEntree.add(this.fileAttenteClient.get(i).getHeureArrivee());
 			} else {
 				this.fileAttenteClient.add(new Voiture(GenerationLois.loiExponentielle(lambda)+fileAttenteClient.get(i-1).getHeureArrivee()));
+				// Ajout du temps d'arrivé à la liste des temps d'arrivés
+				this.listeTempsEntree.add(this.fileAttenteClient.get(i).getHeureArrivee());
 			}
 		}
 		// génération de la station essence
 		Pompe pompeEss = new Pompe();
-		     
+
 		//Calcul des moyennes
 		this.setNbS(calculNbS(psi));
 		this.setNbF(calculNbF(this.psi));
 		this.setTaF(calculTaF(mu, this.psi));
 		this.setTaS(calculTAS(lambda, mu));
-		
+
 	}
-	
+
+	private void mms(double lambda2, double mu2, int nbStation, int nbClient) {
+
+	}
+
+
 	/**
 	 * @return the lambda
 	 */
@@ -370,8 +379,8 @@ public class StationEssence {
 	public void setPsi(double psi) {
 		this.psi = psi;
 	}
-	
-	
-	
-	
+
+
+
+
 }

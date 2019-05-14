@@ -19,7 +19,7 @@ public class TestStationEssence {
 		StationEssence stEss = new StationEssence();
 		stEss.chaineMarkovienne(lambda, mu, nbStat, nbCli);
 		for(int i =0; i < stEss.getFileAttenteClient().size(); i++) {
-			//System.out.println(stEss.getFileAttenteClient().get(i).getHeureArrivee());
+			System.out.println(stEss.getListeTempsEntree().get(i));
 		}
 		System.out.println("Psi : " + stEss.getPsi());
 		System.out.println("NbS : " + stEss.getNbS());
