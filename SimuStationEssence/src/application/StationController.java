@@ -394,7 +394,7 @@ public class StationController {
 		
 		/*for(int i =0; i < stEss.getFileAttenteClient().size(); i++) {
 			System.out.println(stEss.getListeTempsEntree().get(i));
-		}*/	
+		}*/
 	
 		// Ajout des valeurs théoriques
 		LB_NbS_th.setText(String.format("%.4f", uneStation.getNbS()));				
@@ -403,12 +403,16 @@ public class StationController {
 		LB_TAF_th.setText(String.format("%.4f", uneStation.getTaF()));		
 		LB_NbSI_th.setText(String.format("%.4f", uneStation.getNbSi()));
 		
-		LB_psy.setText(String.format("%.4f", uneStation.getPsi()));
+		LB_psy.setText(String.format("%.2f", uneStation.getPsi()));
 		
 		LB_nbMaxErgo.setText(String.valueOf(nbStations));
 		
 		// Ajout des valeurs observées
-		
+		LB_NbS_obs.setText(String.format("%.4f", uneStation.getNbS()));				
+		LB_TAS_obs.setText(String.format("%.4f", uneStation.getTaS()));		
+		LB_NbF_obs.setText(String.format("%.4f", uneStation.getNbF()));			
+		LB_TAF_obs.setText(String.format("%.4f", uneStation.getTaF()));		
+		LB_NbSI_obs.setText(String.format("%.4f", uneStation.getNbSi()));
 		
 		// Si psy < nbStations
 		if(uneStation.getPsi() < nbStations){

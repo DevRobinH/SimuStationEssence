@@ -192,8 +192,8 @@
             <Label layoutX="596.0" layoutY="53.0" text="λ = " textFill="RED" />
             <Label fx:id="LB_lambda" layoutX="617.0" layoutY="53.0" text="3" textFill="RED" />
             <Label layoutX="867.0" layoutY="38.0" prefHeight="20.0" prefWidth="43.0" text="Station" />
-            <Label layoutX="868.0" layoutY="52.0" text="μ = " textFill="RED" />
-            <Label fx:id="LB_mu" layoutX="888.0" layoutY="52.0" text="3" textFill="RED" />
+            <Label layoutX="869.0" layoutY="52.0" text="μ = " textFill="RED" />
+            <Label fx:id="LB_mu" layoutX="889.0" layoutY="52.0" text="3" textFill="RED" />
             <Label layoutX="1003.0" layoutY="45.0" text="Sorties" />
             <Label fx:id="LB_nbPompes" layoutX="858.0" layoutY="15.0" text="1 pompe" textFill="RED" />
             <VBox fx:id="vb_voitures_entrantes" layoutX="543.0" layoutY="130.0" prefHeight="72.0" prefWidth="516.0" />
