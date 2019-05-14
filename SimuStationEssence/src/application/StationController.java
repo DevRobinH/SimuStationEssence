@@ -431,6 +431,7 @@ public class StationController {
 			
 			// On insère une ligne verticale de hauteur 1
 			setVerticalBar(lc_voitures_entrantes, xAxis_entrantes, valBouclee, 1.00);
+
 		}
 		
 		// Nombre moyen de voitures dans la file
@@ -438,6 +439,8 @@ public class StationController {
         lc_voitures_file.getData().add(series1);
         
 		for(int i=0; i<10; i++){
+			// Since Java-8
+			
             series1.getData().add(new XYChart.Data(i, i));
 		}
 		
@@ -509,4 +512,3 @@ public class StationController {
 		
 	}
 }
-
