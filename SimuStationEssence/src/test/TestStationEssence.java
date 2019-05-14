@@ -3,7 +3,6 @@
  */
 package test;
 
-import metier.GenerationLois;
 import metier.StationEssence;
 
 /**

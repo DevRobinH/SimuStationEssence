@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Orientation;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,6 +18,8 @@ import metier.LineChartWithMarkers;
 import metier.StationEssence;
 
 public class StationController {
+	
+	XYChart.Series series1;
 	
 	@FXML
 	TextField TF_lambda;
@@ -115,8 +118,8 @@ public class StationController {
 	LineChartWithMarkers<Number, Number> lc_voitures_sortantes = new LineChartWithMarkers<Number, Number>(xAxis_sortantes, yAxis_sortantes);
 	
 	@FXML
-	LineChart<Number, Number> lc_voitures_file = new LineChart<Number, Number>(xAxis_file, yAxis_file);
-
+    final LineChart<Number,Number> lc_voitures_file = new LineChart<Number,Number>(xAxis_file,yAxis_file);
+    
 	// Définition des radio boutons
 	@FXML
 	RadioButton bt_Markov = new RadioButton();
@@ -169,11 +172,11 @@ public class StationController {
 		// Plage sur l'axe des abscisses
 		xAxis_entrantes.setAutoRanging(false);
 		xAxis_sortantes.setAutoRanging(false);
-		xAxis_file.setAutoRanging(false);
+		//xAxis_file.setAutoRanging(false);
 		
 		xAxis_entrantes.setUpperBound(10);
 		xAxis_sortantes.setUpperBound(10);
-		xAxis_file.setUpperBound(10);
+		//xAxis_file.setUpperBound(10);
 		
 		xAxis_entrantes.setLowerBound(0);
 		xAxis_sortantes.setLowerBound(0);
@@ -190,8 +193,8 @@ public class StationController {
 		yAxis_sortantes.setLowerBound(0);
 		
 		// Plage sur l'axe des ordonnées
-		yAxis_file.setAutoRanging(false);
-		yAxis_file.setUpperBound(1);
+		//yAxis_file.setAutoRanging(false);
+		//yAxis_file.setUpperBound(1);
 		yAxis_file.setLowerBound(0);
 		
 		// Radio boutons
@@ -391,10 +394,6 @@ public class StationController {
 		// On créer une instance de la classe StationEssence
 		StationEssence uneStation = new StationEssence();
 		uneStation.chaineMarkovienne(lambda, mu, nbStations, nbClients);
-		
-		/*for(int i =0; i < stEss.getFileAttenteClient().size(); i++) {
-			System.out.println(stEss.getListeTempsEntree().get(i));
-		}*/
 	
 		// Ajout des valeurs théoriques
 		LB_NbS_th.setText(String.format("%.4f", uneStation.getNbS()));				
@@ -421,7 +420,27 @@ public class StationController {
 		}else {
 			LB_signe.setText(">");
 			LB_ergodique.setText("Le système n'est pas Ergodique");
-		}			
+		}
+		
+		// Insertion des temps d'entree
+		for(int i =0; i < uneStation.getFileAttenteClient().size(); i++) {
+			System.out.println(uneStation.getListeTempsEntree().get(i));
+			
+			// On récupère la valeur bouclée
+			double valBouclee = uneStation.getListeTempsEntree().get(i);
+			
+			// On insère une ligne verticale de hauteur 1
+			setVerticalBar(lc_voitures_entrantes, xAxis_entrantes, valBouclee, 1.00);
+		}
+		
+		// Nombre moyen de voitures dans la file
+		series1 = new XYChart.Series();
+        lc_voitures_file.getData().add(series1);
+        
+		for(int i=0; i<10; i++){
+            series1.getData().add(new XYChart.Data(i, i));
+		}
+		
 	}
 
 	/**
@@ -456,7 +475,7 @@ public class StationController {
 		// Supprime les barres du graphe
 		lc_voitures_entrantes.removeAllVerticalMarker();
 		lc_voitures_sortantes.removeAllVerticalMarker();		
-		lc_voitures_file.getData().removeAll();
+		//lc_voitures_file.getData().removeAll();
 				
 		System.out.println("\nDonnées vidées");
 	}
