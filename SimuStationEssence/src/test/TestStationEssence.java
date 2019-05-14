@@ -3,8 +3,11 @@
  */
 package test;
 
+import java.util.Map;
+
 import metier.GenerationLois;
 import metier.StationEssence;
+
 
 /**
  * @author Quentin MS
@@ -18,24 +21,35 @@ public class TestStationEssence {
 		int nbStat = 1;
 		int nbCli = 100;
 		StationEssence stEss = new StationEssence();
-		stEss.chaineMarkovienne(lambda, mu, nbStat, nbCli);
-		for(int i =0; i < stEss.getFileAttenteClient().size(); i++) {
-			System.out.println(stEss.getListeTempsEntree().get(i));
-		}
-		System.out.println("#####################################");
-		for(int i =0; i < stEss.getFileAttenteClient().size(); i++) {
-			System.out.println(stEss.getListeTempsSortie().get(i));
-		}
-		System.out.println("#####################################");
-		for(int i =0; i < stEss.getFileAttenteClient().size(); i++) {
-			System.out.println(stEss.getListeTempsAttenteClients().get(i));
-		}
-		System.out.println("Psi : " + stEss.getPsi());
-		System.out.println("NbS : " + stEss.getNbS());
-		System.out.println("NbF : " + stEss.getNbF());
-		System.out.println("TaS : " + stEss.getTaS());
-		System.out.println("TaF : " + stEss.getTaF());
+		stEss.setLambda(lambda);
+		stEss.setMu(mu);
+		stEss.setNbPompes(nbStat);
+		stEss.setNbClients(nbCli);
+		stEss.simulation(true);
 		
+		System.out.println("Psi : " + stEss.calculPsi());
+		System.out.println("NbS : " + stEss.calculNbS());
+		System.out.println("NbF : " + stEss.calculNbF());
+		System.out.println("TaS : " + stEss.calculTAS());
+		System.out.println("TaF : " + stEss.calculTaF());
+		
+		
+		for (Map.Entry<Double, Integer> releve : stEss.getContenuBuffer().entrySet()) {
+			//System.out.println(releve.getKey() + " --> " + releve.getValue());
+			
+		}
+
+		// sortants
+		for (double sortie :stEss.getTempsSorties()) {
+			System.out.println(sortie);
+			//serieSortant.add(sortie, 1);
+		}
+
+		// nb dans buffer
+		for (Map.Entry<Double, Integer> releve : stEss.getContenuBuffer().entrySet()) {
+			//System.out.println(releve.getKey() + " --> " + releve.getValue());
+			//serieBuffer.add(releve.getKey().doubleValue(), releve.getValue().doubleValue());
+		}
 	}
 	
 }
