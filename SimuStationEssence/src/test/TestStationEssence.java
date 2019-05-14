@@ -48,7 +48,7 @@ public class TestStationEssence {
 			sortie.add(stEss.getTempsSorties().get(i));
 		//	System.out.println(stEss.getTempsSorties().get(i));
 			//serieSortant.add(sortie, 1);
-		}
+}
 
 		// nb dans buffer
 		for (Map.Entry<Double, Integer> releve : stEss.getContenuBuffer().entrySet()) {

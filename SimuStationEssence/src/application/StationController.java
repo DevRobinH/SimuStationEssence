@@ -73,12 +73,6 @@ public class StationController {
 	Label LB_TAF_obs;
 	
 	@FXML
-	Label LB_NbSI_th;
-	
-	@FXML
-	Label LB_NbSI_obs;
-	
-	@FXML
 	Label LB_ergodique;
 	
 	@FXML
@@ -393,14 +387,14 @@ public class StationController {
 		
 		// On créer une instance de la classe StationEssence
 		StationEssence uneStation = new StationEssence();
-		uneStation.chaineMarkovienne(lambda, mu, nbStations, nbClients);
+		
+		//uneStation.chaineMarkovienne(lambda, mu, nbStations, nbClients);
 	
 		// Ajout des valeurs théoriques
 		LB_NbS_th.setText(String.format("%.4f", uneStation.getNbS()));				
 		LB_TAS_th.setText(String.format("%.4f", uneStation.getTaS()));		
 		LB_NbF_th.setText(String.format("%.4f", uneStation.getNbF()));			
-		LB_TAF_th.setText(String.format("%.4f", uneStation.getTaF()));		
-		LB_NbSI_th.setText(String.format("%.4f", uneStation.getNbSi()));
+		LB_TAF_th.setText(String.format("%.4f", uneStation.getTaF()));
 		
 		LB_psy.setText(String.format("%.2f", uneStation.getPsi()));
 		
@@ -410,8 +404,7 @@ public class StationController {
 		LB_NbS_obs.setText(String.format("%.4f", uneStation.getNbS()));				
 		LB_TAS_obs.setText(String.format("%.4f", uneStation.getTaS()));		
 		LB_NbF_obs.setText(String.format("%.4f", uneStation.getNbF()));			
-		LB_TAF_obs.setText(String.format("%.4f", uneStation.getTaF()));		
-		LB_NbSI_obs.setText(String.format("%.4f", uneStation.getNbSi()));
+		LB_TAF_obs.setText(String.format("%.4f", uneStation.getTaF()));
 		
 		// Si psy < nbStations
 		if(uneStation.getPsi() < nbStations){
@@ -423,7 +416,7 @@ public class StationController {
 		}
 		
 		// Insertion des temps d'entree
-		for(int i =0; i < uneStation.getFileAttenteClient().size(); i++) {
+		/*for(int i =0; i < uneStation.getFileAttenteClient().size(); i++) {
 			System.out.println(uneStation.getListeTempsEntree().get(i));
 			
 			// On récupère la valeur bouclée
@@ -431,13 +424,16 @@ public class StationController {
 			
 			// On insère une ligne verticale de hauteur 1
 			setVerticalBar(lc_voitures_entrantes, xAxis_entrantes, valBouclee, 1.00);
-		}
+
+		}*/
 		
 		// Nombre moyen de voitures dans la file
 		series1 = new XYChart.Series();
         lc_voitures_file.getData().add(series1);
         
 		for(int i=0; i<10; i++){
+			// Since Java-8
+			
             series1.getData().add(new XYChart.Data(i, i));
 		}
 		
@@ -492,9 +488,7 @@ public class StationController {
 		LB_NbF_th.setVisible(isOrNotVisible);			
 		LB_NbF_obs.setVisible(isOrNotVisible);			
 		LB_TAF_th.setVisible(isOrNotVisible);			
-		LB_TAF_obs.setVisible(isOrNotVisible);			
-		LB_NbSI_th.setVisible(isOrNotVisible);		
-		LB_NbSI_obs.setVisible(isOrNotVisible);
+		LB_TAF_obs.setVisible(isOrNotVisible);
 		
 		LB_psy.setVisible(isOrNotVisible);
 		LB_signe.setVisible(isOrNotVisible);
@@ -509,4 +503,3 @@ public class StationController {
 		
 	}
 }
-
