@@ -21,9 +21,11 @@ public class TestStationEssence {
 		double mu = 20;
 		int nbStat = 2;
 		int nbCli = 100;
+		
 		ArrayList<Double> entree = new ArrayList<>();
 		ArrayList<Double> sortie = new ArrayList<>();
 		ArrayList<Integer> nbDansSysteme = new ArrayList<>();
+		
 		StationEssence stEss = new StationEssence();
 		stEss.setLambda(lambda);
 		stEss.setMu(mu);
@@ -46,9 +48,15 @@ public class TestStationEssence {
 		// sortants
 		for (int i = 0; i < stEss.getTempsSorties().size(); i++) {
 			sortie.add(stEss.getTempsSorties().get(i));
+
 			System.out.println(stEss.getTempsSorties().get(i));
 			//serieSortant.add(sortie, 1);
 }
+
+			// System.out.println(stEss.getTempsSorties().get(i));
+			// serieSortant.add(sortie, 1);
+		
+
 
 		// nb dans buffer
 		for (Map.Entry<Double, Integer> releve : stEss.getContenuBuffer().entrySet()) {
