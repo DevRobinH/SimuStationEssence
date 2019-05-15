@@ -3,6 +3,9 @@ package application;
 import java.util.ArrayList;
 import java.util.Map;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Orientation;
@@ -17,11 +20,15 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import metier.LineChartWithMarkers;
 import metier.StationEssence;
 
 public class StationController {
-	
+	ArrayList<Double> entree;
+	ArrayList<Double> sortie ;
+	ArrayList<Integer> nbDansSysteme;
+	int i;
 	XYChart.Series series1;
 	
 	@FXML
@@ -123,7 +130,7 @@ public class StationController {
 	@FXML
 	RadioButton bt_NonMarkov = new RadioButton();
 			
-			
+	Timeline timeline;		
 	// Appelé au lancement de l'application
 	@FXML
 	private void initialize(){
@@ -211,7 +218,7 @@ public class StationController {
 	 * @param Evenement au clic du bouton "Simuler"
 	 */
 	public void actionSimuler(ActionEvent evt){
-
+		i = 0;
 		System.out.println("\nBt Simuler");
 		
 		// On vérouille le bouton simuler
@@ -252,7 +259,7 @@ public class StationController {
 		// Vérouillage/dévérouillage des boutons
 		BT_simuler.setDisable(false);
 		BT_arreter.setDisable(true);
-
+		timeline.stop();
 	}
 
 	/**
@@ -394,9 +401,9 @@ public class StationController {
 		
 		/* Calcul depuis classe métier */
 
-		ArrayList<Double> entree = new ArrayList<>();
-		ArrayList<Double> sortie = new ArrayList<>();
-		ArrayList<Integer> nbDansSysteme = new ArrayList<>();
+		entree = new ArrayList<>();
+		sortie = new ArrayList<>();
+		nbDansSysteme = new ArrayList<>();
 		
 		// Instance de la station
 		StationEssence stEss = new StationEssence();
@@ -432,26 +439,28 @@ public class StationController {
 			nbDansSysteme.add(releve.getValue());
 		}
 		
-		// Temps entrants
-		for(int i=0; i<entree.size(); i++){		
-			// On insère une ligne verticale de hauteur 1
-			setVerticalBar(lc_voitures_entrantes, xAxis_entrantes, entree.get(i), 1.00);
-		}
-		
-		// Temps sortantes
-		for(int i=0; i<sortie.size(); i++){		
-			// On insère une ligne verticale de hauteur 1
-			setVerticalBar(lc_voitures_sortantes, xAxis_sortantes, sortie.get(i), 1.00);
-		}
-		
-		// Nombre moyen de voitures dans la file
+//		// Temps entrants
+//		for(int i=0; i<entree.size(); i++){		
+//			// On insère une ligne verticale de hauteur 1
+//			setVerticalBar(lc_voitures_entrantes, xAxis_entrantes, entree.get(i), 1.00);
+//		}
+//		
+//		// Temps sortantes
+//		for(int i=0; i<sortie.size(); i++){		
+//			// On insère une ligne verticale de hauteur 1
+//			setVerticalBar(lc_voitures_sortantes, xAxis_sortantes, sortie.get(i), 1.00);
+//		}
+//		
+//		// Nombre moyen de voitures dans la file
 		series1 = new XYChart.Series();
         lc_voitures_file.getData().add(series1);
-        
-		for(int i=0; i<nbDansSysteme.size(); i++){
-            series1.getData().add(new XYChart.Data(entree.get(i), nbDansSysteme.get(i)));
-		}
-		
+//        
+//		for(int i=0; i<nbDansSysteme.size(); i++){
+//            series1.getData().add(new XYChart.Data(entree.get(i), nbDansSysteme.get(i)));
+//		}
+		timeline = new Timeline(new KeyFrame(Duration.millis(50), ae-> afficher_timeline()));
+		timeline.setCycleCount(Animation.INDEFINITE);
+		timeline.play();
 		// Ajout des valeurs théoriques
 		LB_NbS_th.setText(String.format("%.4f", stEss.calculNbS()));				
 		LB_TAS_th.setText(String.format("%.4f", stEss.calculTAS()));		
@@ -476,6 +485,48 @@ public class StationController {
 			LB_signe.setText(">");
 			LB_ergodique.setText("Le système n'est pas Ergodique");
 		}				
+	}
+	
+	public void afficher_timeline(){
+		try{
+
+			// On insère une ligne verticale de hauteur 1
+			setVerticalBar(lc_voitures_entrantes, xAxis_entrantes, entree.get(i), 1.00);
+			
+		
+		// Temps sortantes	
+			// On insère une ligne verticale de hauteur 1
+			setVerticalBar(lc_voitures_sortantes, xAxis_sortantes, sortie.get(i), 1.00);
+		
+		
+		// Nombre moyen de voitures dans la file
+         series1.getData().add(new XYChart.Data(entree.get(i), nbDansSysteme.get(i)));
+         avance_chart(entree.get(i), sortie.get(i));
+         i++;
+		}
+		catch(Exception e){
+			timeline.stop();
+			// Vérouillage/dévérouillage des boutons
+			BT_simuler.setDisable(false);
+			BT_arreter.setDisable(true);
+		}
+		
+	}
+	
+	private void avance_chart(double i, double j){
+
+		if(i > 10){
+			xAxis_entrantes.setUpperBound(i);
+			xAxis_entrantes.setLowerBound(i-10);
+		}
+		
+		if(j > 10){
+			xAxis_sortantes.setUpperBound(i);
+			xAxis_sortantes.setLowerBound(i-10);
+		}
+
+		xAxis_file.setUpperBound(i);
+			
 	}
 
 	/**
