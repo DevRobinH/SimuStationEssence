@@ -461,12 +461,18 @@ public class StationController {
 		timeline = new Timeline(new KeyFrame(Duration.millis(50), ae-> afficher_timeline()));
 		timeline.setCycleCount(Animation.INDEFINITE);
 		timeline.play();
-		// Ajout des valeurs théoriques
-		LB_NbS_th.setText(String.format("%.4f", stEss.calculNbS()));				
-		LB_TAS_th.setText(String.format("%.4f", stEss.calculTAS()));		
-		LB_NbF_th.setText(String.format("%.4f", stEss.calculNbF()));			
-		LB_TAF_th.setText(String.format("%.4f", stEss.calculTaF()));
-		
+		// Ajout des valeurs théoriques si markovien
+		if (estMarkov) {
+			LB_NbS_th.setText(String.format("%.4f", stEss.calculNbS()));				
+			LB_TAS_th.setText(String.format("%.4f", stEss.calculTAS()));		
+			LB_NbF_th.setText(String.format("%.4f", stEss.calculNbF()));			
+			LB_TAF_th.setText(String.format("%.4f", stEss.calculTaF()));
+		} else {
+			LB_NbS_th.setText(" - ");				
+			LB_TAS_th.setText(" - ");		
+			LB_NbF_th.setText(" - ");			
+			LB_TAF_th.setText(" - ");
+		}
 		LB_psy.setText(String.format("%.2f", stEss.calculPsi()));
 		
 		LB_nbMaxErgo.setText(String.valueOf(nbStations));
