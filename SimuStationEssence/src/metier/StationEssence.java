@@ -101,7 +101,7 @@ public class StationEssence {
 		// Tirage des Voitures
 		double temps = 0;
 		for (int i = 0; i < nbClients; i++) {
-			temps += markov ? GenerationLois.loiExponentielle(lambda) : Math.abs(GenerationLois.loiNormale(1.0/lambda,1.0/lambda));
+			temps += markov ? GenerationLois.loiExponentielle(lambda) : GenerationLois.loiExponentielle(lambda);
 			voitures.add(new Voiture(temps));
 		}
 
@@ -120,7 +120,7 @@ public class StationEssence {
 					// On va chercher un Voiture
 					Pompe.setClient(buffer.removeFirst());
 					Pompe.setHeureDebutService(temps);
-					Pompe.setTempsService(markov ? GenerationLois.loiExponentielle(mu) : GenerationLois.loiExponentielle(mu));
+					Pompe.setTempsService(markov ? GenerationLois.loiExponentielle(mu) : GenerationLois.loiNormale(1.0/mu,1.0/mu));
 					tempsMoyenAttenteFile += temps - Pompe.getClient().getHeureArrivee();
 				} else if (!Pompe.nonUtilise() && Pompe.isFinish(temps)) {
 					// Le Voiture a été traité
